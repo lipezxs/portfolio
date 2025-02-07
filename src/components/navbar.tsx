@@ -14,7 +14,7 @@ import clsx from "clsx";
 import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "@/components/theme-switch";
 import {
-  GithubIcon,
+  GithubIcon, InstagramIcon, LinkedIn
 } from "@/components/icons";
 
 export const Navbar = () => {
@@ -55,13 +55,13 @@ export const Navbar = () => {
         justify="end"
       >
         <NavbarItem className="hidden sm:flex gap-2">
-          {/* <Link isExternal href={siteConfig.links.twitter} title="Twitter">
-            <TwitterIcon className="text-default-500" />
+          <Link isExternal href={siteConfig.links.InstagramIcon} title="Instagram">
+            <InstagramIcon className="text-default-500" />
           </Link>
-          <Link isExternal href={siteConfig.links.discord} title="Discord">
-            <DiscordIcon className="text-default-500" />
-          </Link> */}
-          <Link isExternal href={siteConfig.links.github} title="GitHub">
+          <Link isExternal href={siteConfig.links.LinkedIn} title="LinkedIn">
+            <LinkedIn className="text-default-500" />
+          </Link>
+          <Link isExternal href={siteConfig.links.GithubIcon} title="GitHub">
             <GithubIcon className="text-default-500" />
           </Link>
           <ThemeSwitch />
@@ -82,7 +82,7 @@ export const Navbar = () => {
       </NavbarContent>
 
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
-        <Link isExternal href={siteConfig.links.github}>
+        <Link isExternal href={siteConfig.links.GithubIcon}>
           <GithubIcon className="text-default-500" />
         </Link>
         <ThemeSwitch />

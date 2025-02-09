@@ -14,7 +14,7 @@ import clsx from "clsx";
 import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "@/components/theme-switch";
 import {
-  GithubIcon, InstagramIcon, LinkedIn
+  GithubIcon
 } from "@/components/icons";
 
 export const Navbar = () => {
@@ -55,12 +55,12 @@ export const Navbar = () => {
         justify="end"
       >
         <NavbarItem className="hidden sm:flex gap-2">
-          <Link isExternal href={siteConfig.links.InstagramIcon} title="Instagram">
+          {/* <Link isExternal href={siteConfig.links.InstagramIcon} title="Instagram">
             <InstagramIcon className="text-default-500" />
           </Link>
           <Link isExternal href={siteConfig.links.LinkedIn} title="LinkedIn">
             <LinkedIn className="text-default-500" />
-          </Link>
+          </Link> */}
           <Link isExternal href={siteConfig.links.GithubIcon} title="GitHub">
             <GithubIcon className="text-default-500" />
           </Link>
@@ -103,6 +103,9 @@ export const Navbar = () => {
               >
                 {item.label}
               </Link>
+
+                
+              
             </NavbarMenuItem>
           ))}
         </div>

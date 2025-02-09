@@ -2,6 +2,8 @@ import * as React from "react";
 
 import { IconSvgProps } from "@/types";
 
+
+
 export const Logo: React.FC<IconSvgProps> = ({
   size = 36,
   height,
@@ -28,7 +30,7 @@ export const InstagramIcon: React.FC<IconSvgProps> = ({
   width,
   height,
   ...props
-}) => {
+  }) => {
   return (
     <svg
       height={size || height}

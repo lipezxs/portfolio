@@ -5,14 +5,15 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "type": "module",
     "start": "node server.js"
-    
   },
+
+
+  
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "dependencies": {
     "body-parser": "^1.20.3",
     "cors": "^2.8.5",

@@ -26,20 +26,20 @@ const IndexPage = () => {
   return (
     <DefaultLayout>
       {/* Container principal */}
-      <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
-        {/* Conteúdo Principal */}
-        <main
-          className="flex-grow flex items-center justify-center px-4"
-          onMouseMove={handleMouseMove}
-        >
-          {/* Efeito de gradiente no fundo */}
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(59, 130, 246, 0.1) 0%, rgba(0, 0, 0, 0) 50%)`,
-            }}
-          />
+      <div
+        className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900 overflow-hidden"
+        onMouseMove={handleMouseMove}
+      >
+        {/* Efeito de gradiente no fundo */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(59, 130, 246, 0.1) 0%, rgba(0, 0, 0, 0) 50%)`,
+          }}
+        />
 
+        {/* Conteúdo Principal */}
+        <main className="flex-grow flex items-center justify-center">
           {/* Seção centralizada */}
           <motion.section
             className="flex flex-col items-center justify-center gap-4 w-full max-w-2xl px-4"

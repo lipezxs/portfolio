@@ -9,10 +9,7 @@ export const siteConfig = {
       label: "Sobre mim",
       href: "/docs",
     },
-    {
-      label: "Conhecimentos",
-      href: "/pricing",
-    },
+
     {
       label: "Projetos",
       href: "/blog",
@@ -28,10 +25,7 @@ export const siteConfig = {
       label: "Sobre mim",
       href: "/docs",
     },
-    {
-      label: "Conhecimentos",
-      href: "/pricing",
-    },
+  
     {
       label: "Projetos",
       href: "/blog",

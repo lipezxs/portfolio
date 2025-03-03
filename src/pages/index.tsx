@@ -85,12 +85,20 @@ const IndexPage = () => {
           </motion.section>
         </main>
 
-        {/* Footer (opcional) */}
-        {/* <footer className="bg-gray-100 dark:bg-gray-800 text-center p-4">
-          <p className="text-gray-600 dark:text-gray-300 text-sm">
-            © 2025 Felipe Alves. Todos os direitos reservados.
-          </p>
-        </footer> */}
+         {/* Footer com Blur Interativo */}
+         <footer
+          className="py-6 bg-white/10 dark:bg-gray-800/10 backdrop-blur-md border-t border-gray-200/10 dark:border-gray-700/10"
+          style={{
+            background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px,  rgba(59, 130, 246, 0.1) 0%, rgba(0, 0, 0, 0) 50%)`,
+          }}
+        >
+          <div className="container mx-auto px-4 text-center">
+            <p className="text-gray-600 dark:text-gray-300 text-sm">
+              © 2025 Felipe Alves. Todos os direitos reservados.
+            </p>
+
+          </div>
+        </footer>
       </div>
 
       {/* Estilos CSS */}

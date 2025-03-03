@@ -26,7 +26,7 @@ const IndexPage = () => {
     <DefaultLayout>
       {/* Container principal */}
       <div
-        className="min-h-screen flex flex-col "
+        className="min-h-screen  flex-col "
         onMouseMove={handleMouseMove}
       >
         {/* Efeito de gradiente no fundo */}
@@ -53,7 +53,7 @@ const IndexPage = () => {
                 <div className="text-gray-600 dark:text-gray-300 leading-relaxed space-y-4">
                   <p>
                     Me chamo Felipe Alves, cursando Análise e Desenvolvimento de Sistemas
-                    pela UCB - Universidade Católica de Brasília e desenvolvedor web Front-end. Desenvolvo páginas e sistemas web responsivos e de layout atrativo.
+                    pela UCB - Universidade Católica de Brasília e desenvolvedor web Front-end.
                   </p>
                   <p>
                     Tenho uma trajetória de cerca de 2 anos trabalhando com suporte técnico e manutenção de computadores, o que me tornou um profissional dedicado e organizado.
@@ -80,7 +80,24 @@ const IndexPage = () => {
             </div>
           </section>
         </main>
+
+        
       </div>
+
+      {/* Footer com Blur Interativo */}
+      <footer
+          className="py-6 bg-white/10 dark:bg-gray-800/10 backdrop-blur-md border-t border-gray-200/10 dark:border-gray-700/10"
+          style={{
+            background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px,  rgba(59, 130, 246, 0.1) 0%, rgba(0, 0, 0, 0) 50%)`,
+          }}
+        >
+          <div className="container mx-auto px-4 text-center">
+            <p className="text-gray-600 dark:text-gray-300 text-sm">
+              © 2025 Felipe Alves. Todos os direitos reservados.
+            </p>
+
+          </div>
+        </footer>
     </DefaultLayout>
   );
 };

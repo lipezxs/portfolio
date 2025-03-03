@@ -33,7 +33,7 @@ connection.connect((err) => {
 });
 
 // Rota para receber dados do formulário
-app.post("/contato", (req, res) => {
+app.post("/about", (req, res) => {
   const { name, email, subject, message } = req.body;
 
   // Validação básica

@@ -42,30 +42,30 @@ const IndexPage = () => {
 
           {/* Seção centralizada */}
           <motion.section
-            className="flex flex-col items-center justify-center gap-6"
+            className="flex flex-col items-center justify-center gap-4 w-full max-w-2xl px-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
             {/* Texto principal */}
             <motion.div
-              className="max-w-lg text-center"
+              className="text-center"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.8, ease: "easeOut" }}
             >
-              <span className="text-4xl font-bold text-gray-900 dark:text-white">
+              <span className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
                 Me chamo Felipe&nbsp;
               </span>
               <motion.span
-                className="text-4xl font-bold text-blue-500"
+                className="text-3xl md:text-4xl font-bold text-blue-500"
                 animate={{ opacity: [1, 0.5, 1] }}
                 transition={{ duration: 1.5, repeat: Infinity }}
               >
                 Alves,&nbsp;
               </motion.span>
               <br />
-              <div className="text-xl text-gray-600 dark:text-gray-300 mt-4 h-8">
+              <div className="text-lg md:text-xl text-gray-600 dark:text-gray-300 mt-4 h-8">
                 {typedText}
                 <span className="inline-block ml-1 animate-blink">|</span>
               </div>

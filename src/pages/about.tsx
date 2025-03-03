@@ -64,7 +64,7 @@ const ContactSection = () => {
     e.preventDefault();
     if (validateForm()) {
       try {
-        const response = await fetch("https://lipezxs.vercel.app/about", {
+        const response = await fetch("https://lipezxs.vercel.app/api/rota", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

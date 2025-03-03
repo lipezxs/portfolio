@@ -22,12 +22,13 @@ app.use(
 app.use(bodyParser.json());
 
 // Configuração do banco de dados (use um banco remoto!)
-const connection = await mysql.createConnection({
-  host: process.env.localhost, 
+const connection = mysql.createConnection({
+  host: process.env.localhost,
   user: process.env.root,
   password: process.env.Fa876593,
-  database: process.env.portflio,
+  database: process.env.portfolio,
 });
+
 
 // Rota para receber dados do formulário
 app.post("/about", async (req, res) => {

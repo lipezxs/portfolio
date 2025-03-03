@@ -27,7 +27,7 @@ const IndexPage = () => {
     <DefaultLayout>
       {/* Container principal */}
       <div
-        className="min-h-screen flex flex-col"
+        className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900 overflow-hidden"
         onMouseMove={handleMouseMove}
       >
         {/* Efeito de gradiente no fundo */}
@@ -39,7 +39,7 @@ const IndexPage = () => {
         />
 
         {/* Conteúdo Principal */}
-        <main className="flex-grow flex items-center justify-center">
+        <main className="flex-grow flex items-center justify-center p-4">
           {/* Seção centralizada */}
           <motion.section
             className="flex flex-col items-center justify-center gap-4 w-full max-w-2xl px-4"
@@ -85,18 +85,17 @@ const IndexPage = () => {
           </motion.section>
         </main>
 
-         {/* Footer com Blur Interativo */}
-         <footer
+        {/* Footer com Blur Interativo */}
+        <footer
           className="py-6 bg-white/10 dark:bg-gray-800/10 backdrop-blur-md border-t border-gray-200/10 dark:border-gray-700/10"
           style={{
-            background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px,  rgba(59, 130, 246, 0.1) 0%, rgba(0, 0, 0, 0) 50%)`,
+            background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(59, 130, 246, 0.1) 0%, rgba(0, 0, 0, 0) 50%)`,
           }}
         >
           <div className="container mx-auto px-4 text-center">
             <p className="text-gray-600 dark:text-gray-300 text-sm">
               © 2025 Felipe Alves. Todos os direitos reservados.
             </p>
-
           </div>
         </footer>
       </div>

@@ -6,8 +6,13 @@ import cors from "cors"; // Para permitir requisições do frontend
 const app = express();
 
 // Configuração do CORS
-app.use(cors());
-
+app.use(
+    cors({
+      origin: "https://lipezxs.vercel.app", // Substitua pelo domínio do seu frontend
+      methods: ["GET", "POST"], // Métodos permitidos
+      credentials: true, // Permitir cookies e cabeçalhos de autenticação
+    })
+  );
 // Configuração do body-parser
 app.use(bodyParser.json());
 

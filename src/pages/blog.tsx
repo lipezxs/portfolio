@@ -25,7 +25,7 @@ const IndexPage = () => {
     <DefaultLayout>
       {/* Container principal */}
       <div
-        className="min-h-screen flex flex-col"
+        className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900 overflow-hidden"
         onMouseMove={handleMouseMove}
       >
         {/* Efeito de gradiente no fundo */}

@@ -18,7 +18,7 @@ import { GithubIcon, InstagramIcon, LinkedInIcon } from "@/components/icons";
 export const Navbar = () => {
   return (
     <HeroUINavbar maxWidth="xl" position="sticky" className="shadow-sm">
-      <NavbarContent className="basis-1/5 sm:basis-full gap-12" justify="center">
+      <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand className="gap-3 max-w-fit">
           <Link
             className="flex justify-start items-center gap-1 hover:opacity-80 transition-opacity"
@@ -29,35 +29,33 @@ export const Navbar = () => {
             <p className="font-bold text-xl text-foreground">Felipe Alves</p>
           </Link>
         </NavbarBrand>
-        <div className="hidden lg:flex gap-8 justify-start ml-2 items-center">
-          {siteConfig.navItems.map((item) => (
-            <NavbarItem key={item.href}>
-              <Link
-                className={clsx(
-                  linkStyles({ color: "foreground" }),
-                  "data-[active=true]:text-primary data-[active=true]:font-medium after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
-                )}
-                color="foreground"
-                href={item.href}
-              >
-                {item.label}
-              </Link>
-            </NavbarItem>
-          ))}
-        </div>
       </NavbarContent>
 
-      <NavbarContent
-        className="hidden sm:flex basis-1/5 sm:basis-full"
-        justify="end"
-      >
-        <NavbarItem className="hidden sm:flex gap-6 items-center">
-        <Link isExternal href={siteConfig.links.InstagramIcon} title="Instagram">
-          <InstagramIcon
-            className="text-default-500 hover:text-[#E1306C] transition-colors"
-            size={24}
-              />
+      <NavbarContent className="hidden lg:flex gap-8 justify-center items-center flex-grow">
+        {siteConfig.navItems.map((item) => (
+          <NavbarItem key={item.href}>
+            <Link
+              className={clsx(
+                linkStyles({ color: "foreground" }),
+                "data-[active=true]:text-primary data-[active=true]:font-medium after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px] after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
+              )}
+              color="foreground"
+              href={item.href}
+            >
+              {item.label}
             </Link>
+          </NavbarItem>
+        ))}
+      </NavbarContent>
+
+      <NavbarContent className="basis-1/5 sm:basis-full" justify="end">
+        <NavbarItem className="hidden sm:flex gap-6 items-center">
+          <Link isExternal href={siteConfig.links.InstagramIcon} title="Instagram">
+            <InstagramIcon
+              className="text-default-500 hover:text-[#E1306C] transition-colors"
+              size={24}
+            />
+          </Link>
           <Link isExternal href={siteConfig.links.LinkedInIcon} title="LinkedIn">
             <LinkedInIcon
               className="text-default-400 hover:text-[#0A66C2] transition-colors"
@@ -83,16 +81,14 @@ export const Navbar = () => {
             />
           </Link>
           <ThemeSwitch />
-          {/* Adicionar um fundo ao ícone */}
-          <div className=""> {/* Fundo e bordas arredondadas */}
-          <NavbarMenuToggle className="text-default-500 hover:text-primary transition-colors text-2xl p-3 rounded-lg" />
-          </div>    
+          <div className="">
+            <NavbarMenuToggle className="text-default-500 hover:text-primary transition-colors text-2xl p-3 rounded-lg" />
+          </div>
         </NavbarItem>
       </NavbarContent>
 
       <NavbarMenu>
-        <div className="mx-4 mt-4 flex flex-col gap-6 items-center">
-          {/* Itens do Menu */}
+        <div className="mx-4 mt-20 flex flex-col gap-6 items-center">
           {siteConfig.navMenuItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>
               <Link
@@ -108,12 +104,11 @@ export const Navbar = () => {
             </NavbarMenuItem>
           ))}
 
-          {/* Ícones */}
           <div className="flex gap-6 mt-4">
-          <Link isExternal href={siteConfig.links.InstagramIcon} title="Instagram">
-          <InstagramIcon
-            className="text-default-500 hover:text-[#E1306C] transition-colors"
-            size={24}
+            <Link isExternal href={siteConfig.links.InstagramIcon} title="Instagram">
+              <InstagramIcon
+                className="text-default-500 hover:text-[#E1306C] transition-colors"
+                size={24}
               />
             </Link>
             <Link isExternal href={siteConfig.links.LinkedInIcon} title="LinkedIn">

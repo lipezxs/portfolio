@@ -4,7 +4,7 @@ const cors = require("cors");
 
 const express = require('express');
 const app = express();
-const port = process.env.PORT || 10000;  // A porta usada pela Render (geralmente 10000 ou especificada no painel)
+const port = process.env.PORT || 51895;  // A porta usada pela Render (geralmente 10000 ou especificada no painel)
 
 app.listen(port, () => {
     console.log(`Servidor rodando na porta ${port}`);
@@ -21,7 +21,7 @@ const db = mysql2.createPool({
     user: "root",            // Seu usuário do MySQL
     password: "wSOnTWnTDGpyJcBoPAHskWxYTFASLtrQ",          // Sua senha do MySQL
     database: "railway",          // Seu banco de dados
-    port: 10000                      // Porta padrão do MySQL
+    port: 51895                      // Porta padrão do MySQL
 });
 
 db.getConnection((err, connection) => {
@@ -55,15 +55,4 @@ app.post("/contact", (req, res) => {
     });
 });
 
-
-// 📌 Rota para listar todos os contatos (opcional)
-app.get("/contacts", (req, res) => {
-    db.query("SELECT * FROM contatos", (err, results) => {
-        if (err) {
-            console.error("Erro ao buscar contatos:", err);
-            return res.status(500).json({ error: "Erro ao buscar contatos" });
-        }
-        res.json(results);
-    });
-});
 

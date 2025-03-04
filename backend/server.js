@@ -9,7 +9,7 @@ const app = express();
 app.use(cors());
 app.use(express.json()); // Habilita JSON no body das requisições
 
-const mysql = require('mysql2');
+const mysql2 = require('mysql2');
 
 const db = mysql2.createPool({
     host: "ballast.proxy.rlwy.net",     // Certifique-se de que está usando o host correto

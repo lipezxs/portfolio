@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 
 dotenv.config(); // Carregar variáveis do .env
 
-const app = express();
+app.use(express.json());
 
 // Configuração do CORS
 app.use(
@@ -22,15 +22,12 @@ app.use(express.json());
 app.use(bodyParser.json());
 
 // Configuração do banco de dados usando Pool de Conexões (melhor para produção)
-const pool = mysql.createPool({
-  host: process.env.DB_HOST, // Certifique-se de definir isso no Render
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  port: process.env.DB_PORT || 3306,
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
+const connection = mysql.createConnection({
+  host: process.env.DB_HOST || "https://portfolio-k0tt.onrender.com",
+  user: process.env.DB_USER || "root",
+  password: process.env.DB_PASSWORD || "Fa876593",
+  database: process.env.DB_NAME || "portfolio",
+  port: 3306,
 });
 
 // Testar a conexão com o banco de dados

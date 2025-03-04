@@ -1,5 +1,5 @@
 import DefaultLayout from "@/layouts/default";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -18,6 +18,7 @@ const ContactSection = () => {
 
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [responseMessage, setResponseMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -33,12 +34,12 @@ const ContactSection = () => {
     let isValid = true;
     const newErrors = { name: "", email: "", subject: "", message: "" };
 
-    if (!formData.name) {
+    if (!formData.name.trim()) {
       newErrors.name = "Nome é obrigatório.";
       isValid = false;
     }
 
-    if (!formData.email) {
+    if (!formData.email.trim()) {
       newErrors.email = "E-mail é obrigatório.";
       isValid = false;
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
@@ -46,12 +47,12 @@ const ContactSection = () => {
       isValid = false;
     }
 
-    if (!formData.subject) {
+    if (!formData.subject.trim()) {
       newErrors.subject = "Assunto é obrigatório.";
       isValid = false;
     }
 
-    if (!formData.message) {
+    if (!formData.message.trim()) {
       newErrors.message = "Mensagem é obrigatória.";
       isValid = false;
     }
@@ -62,30 +63,39 @@ const ContactSection = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (validateForm()) {
-      try {
-        const response = await fetch("https://portfolio-k0tt.onrender.com/contact", { 
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        });
+    if (!validateForm() || loading) return;
 
-        const result = await response.json();
+    setLoading(true);
+    try {
+      const response = await fetch("https://portfolio-k0tt.onrender.com/about", { 
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
 
-        if (response.ok) {
-          setResponseMessage("Mensagem enviada com sucesso!");
-          setFormData({ name: "", email: "", subject: "", message: "" }); // Limpa o formulário
-        } else {
-          setResponseMessage(result.error || "Erro ao enviar a mensagem. Tente novamente.");
-        }
-      } catch (error) {
-        console.error("Erro:", error);
-        setResponseMessage("Erro ao enviar a mensagem. Tente novamente.");
+      const result = await response.json();
+
+      if (response.ok) {
+        setResponseMessage("✅ Mensagem enviada com sucesso!");
+        setFormData({ name: "", email: "", subject: "", message: "" });
+      } else {
+        setResponseMessage(`❌ ${result.error || "Erro ao enviar a mensagem."}`);
       }
+    } catch (error) {
+      console.error("Erro:", error);
+      setResponseMessage("❌ Erro ao enviar a mensagem. Tente novamente.");
+    } finally {
+      setLoading(false);
     }
   };
+
+  // Limpar mensagem de resposta após 5 segundos
+  useEffect(() => {
+    if (responseMessage) {
+      const timer = setTimeout(() => setResponseMessage(""), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [responseMessage]);
 
   return (
     <DefaultLayout>
@@ -107,82 +117,49 @@ const ContactSection = () => {
             Fale Comigo
           </h2>
           <form onSubmit={handleSubmit} className="max-w-2xl mx-auto">
-            {/* Campo Nome */}
-            <div className="mb-6">
-              <label htmlFor="name" className="block text-gray-700 dark:text-gray-300 mb-2">
-                Nome
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white"
-                required
-              />
-              {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
-            </div>
+          {["name", "email", "subject", "message"].map((field) => (
+  <div key={field} className="mb-6">
+    <label htmlFor={field} className="block text-gray-700 dark:text-gray-300 mb-2 capitalize">
+      {field === "name" ? "Nome" : field === "email" ? "E-mail" : field === "subject" ? "Assunto" : "Mensagem"}
+    </label>
+    {field === "message" ? (
+      <textarea
+        id={field}
+        name={field}
+        value={formData[field as keyof typeof formData]} // ✅ Correção aqui
+        onChange={handleChange}
+        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white"
+        rows={5}
+        required
+      />
+    ) : (
+      <input
+        type={field === "email" ? "email" : "text"}
+        id={field}
+        name={field}
+        value={formData[field as keyof typeof formData]} // ✅ Correção aqui
+        onChange={handleChange}
+        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white"
+        required
+      />
+    )}
+    {errors[field as keyof typeof errors] && <p className="text-red-500 text-sm mt-1">{errors[field as keyof typeof errors]}</p>}
+  </div>
+))}
 
-            {/* Campo E-mail */}
-            <div className="mb-6">
-              <label htmlFor="email" className="block text-gray-700 dark:text-gray-300 mb-2">
-                E-mail
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white"
-                required
-                pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
-              />
-              {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
-            </div>
-
-            {/* Campo Assunto */}
-            <div className="mb-6">
-              <label htmlFor="subject" className="block text-gray-700 dark:text-gray-300 mb-2">
-                Assunto
-              </label>
-              <input
-                type="text"
-                id="subject"
-                name="subject"
-                value={formData.subject}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white"
-                required
-              />
-              {errors.subject && <p className="text-red-500 text-sm mt-1">{errors.subject}</p>}
-            </div>
-
-            {/* Campo Mensagem */}
-            <div className="mb-6">
-              <label htmlFor="message" className="block text-gray-700 dark:text-gray-300 mb-2">
-                Mensagem
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white"
-                rows={5}
-                required
-              />
-              {errors.message && <p className="text-red-500 text-sm mt-1">{errors.message}</p>}
-            </div>
 
             {/* Botão de Enviar */}
             <div className="text-center">
               <button
                 type="submit"
-                className="px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                className={`px-6 py-3 font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg ${
+                  loading
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-blue-500 text-white hover:bg-blue-600 hover:shadow-xl"
+                }`}
+                disabled={loading}
               >
-                Enviar Mensagem
+                {loading ? "Enviando..." : "Enviar Mensagem"}
               </button>
             </div>
           </form>
@@ -190,9 +167,10 @@ const ContactSection = () => {
           {/* Mensagem de Resposta */}
           {responseMessage && (
             <p
-              className={`mt-4 text-center ${
+              className={`mt-4 text-center font-semibold ${
                 responseMessage.includes("sucesso") ? "text-green-500" : "text-red-500"
               }`}
+              aria-live="polite"
             >
               {responseMessage}
             </p>

@@ -23,11 +23,15 @@ app.use(bodyParser.json());
 
 // Configuração do banco de dados usando variáveis do .env
 const connection = mysql.createConnection({
-  host: process.env.DB_HOST,  // No Render, use o host do banco remoto
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
+  host: process.env.DB_HOST || "https://portfolio-k0tt.onrender.com", // Insira o host correto
+  user: process.env.DB_USER || "root",
+  password: process.env.DB_PASSWORD || "Fa876593",
+  database: process.env.DB_NAME || "portfolio",
+  port: 3306,
 });
+
+
+
 
 // Verificar conexão com MySQL antes de iniciar o servidor
 connection.connect((err) => {

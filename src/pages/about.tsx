@@ -1,6 +1,12 @@
 import DefaultLayout from "@/layouts/default";
 import { useState, useEffect } from "react";
 
+// Interface para o tipo de resposta do backend
+interface ApiResponse {
+  message?: string;
+  error?: string;
+}
+
 const ContactSection = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -20,16 +26,19 @@ const ContactSection = () => {
   const [responseMessage, setResponseMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // Função para atualizar o estado do formulário
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
     setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
   };
 
+  // Função para rastrear a posição do mouse
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     setMousePosition({ x: e.clientX, y: e.clientY });
   };
 
+  // Função para validar o formulário
   const validateForm = () => {
     let isValid = true;
     const newErrors = { name: "", email: "", subject: "", message: "" };
@@ -42,7 +51,7 @@ const ContactSection = () => {
     if (!formData.email.trim()) {
       newErrors.email = "E-mail é obrigatório.";
       isValid = false;
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+    } else if (!isValidEmail(formData.email)) {
       newErrors.email = "E-mail inválido.";
       isValid = false;
     }
@@ -61,19 +70,25 @@ const ContactSection = () => {
     return isValid;
   };
 
+  // Função para validar e-mail
+  const isValidEmail = (email: string) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
+  // Função para enviar o formulário
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!validateForm() || loading) return;
 
     setLoading(true);
     try {
-      const response = await fetch("https://portfolio-k0tt.onrender.com/about", { 
+      const response = await fetch("https://portfolio-k0tt.onrender.com/about", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
-      const result = await response.json();
+      const result: ApiResponse = await response.json();
 
       if (response.ok) {
         setResponseMessage("✅ Mensagem enviada com sucesso!");

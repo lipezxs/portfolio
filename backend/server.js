@@ -1,12 +1,11 @@
 import express from "express";
 import mysql from "mysql2";
 import cors from "cors";
-import bodyParser from "body-parser";
 import dotenv from "dotenv";
 
 dotenv.config(); // Carregar variáveis do .env
 
-app.use(express.json());
+const app = express(); // Inicializar o express
 
 // Configuração do CORS
 app.use(
@@ -19,17 +18,18 @@ app.use(
 
 // Middleware
 app.use(express.json());
-app.use(bodyParser.json());
 
 // Configuração do banco de dados usando Pool de Conexões (melhor para produção)
-const connection = mysql.createConnection({
-  host: process.env.DB_HOST || "44.226.145.213", // IP correto do banco na Render
-  user: process.env.DB_USER || "root", // Usuário do banco
-  password: process.env.DB_PASSWORD || "Fa876593", // Senha do banco
-  database: process.env.DB_NAME || "portfolio", // Nome do banco de dados
-  port: 3306, // Porta padrão do MySQL
+const pool = mysql.createPool({
+  host: process.env.DB_HOST || "localhost", // Usar variável de ambiente ou localhost como fallback
+  user: process.env.DB_USER || "root", // Usar variável de ambiente ou root como fallback
+  password: process.env.DB_PASSWORD || "Fa876593", // Usar variável de ambiente ou senha padrão
+  database: process.env.DB_NAME || "portfolio", // Usar variável de ambiente ou nome padrão
+  port: process.env.DB_PORT || 3306, // Usar variável de ambiente ou porta padrão
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
 });
-
 
 // Testar a conexão com o banco de dados
 pool.getConnection((err, connection) => {

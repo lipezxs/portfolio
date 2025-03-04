@@ -1,9 +1,14 @@
-const express = require("express");
 const mysql = require('mysql2'); // ou mysql2, dependendo de sua escolha
 const cors = require("cors");
 
 
+const express = require('express');
 const app = express();
+const port = process.env.PORT || 10000;  // A porta usada pela Render (geralmente 10000 ou especificada no painel)
+
+app.listen(port, () => {
+    console.log(`Servidor rodando na porta ${port}`);
+});
 
 // Configurar CORS para permitir conexões do frontend
 app.use(cors());

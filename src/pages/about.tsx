@@ -89,21 +89,27 @@ const ContactSection = () => {
       });
       
 
-      const result: ApiResponse = await response.json();
+      const mysql = require("mysql2/promise");
 
-      if (response.ok) {
-        setResponseMessage("✅ Mensagem enviada com sucesso!");
-        setFormData({ name: "", email: "", subject: "", message: "" });
-      } else {
-        setResponseMessage(`❌ ${result.error || "Erro ao enviar a mensagem."}`);
-      }
-    } catch (error) {
-      console.error("Erro:", error);
-      setResponseMessage("❌ Erro ao enviar a mensagem. Tente novamente.");
-    } finally {
-      setLoading(false);
-    }
-  };
+async function testConnection() {
+  try {
+    const connection = await mysql.createConnection({
+      host: "seu-host-na-render",
+      user: "seu-usuario",
+      password: "sua-senha",
+      database: "portfolio",
+      ssl: { rejectUnauthorized: true }
+    });
+
+    console.log("✅ Conexão bem-sucedida!");
+    connection.end();
+  } catch (error) {
+    console.error("❌ Erro na conexão:", error);
+  }
+}
+
+testConnection();
+
 
   // Limpar mensagem de resposta após 5 segundos
   useEffect(() => {

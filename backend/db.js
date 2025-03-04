@@ -1,15 +1,8 @@
-require("dotenv").config(); // Importa e configura o dotenv
-const mysql = require("mysql2/promise");
+const { Pool } = require("pg");
 
-// Configuração da conexão com o banco de dados
-const pool = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-  waitForConnections: true,
-  connectionLimit: Number(process.env.DB_CONNECTION_LIMIT) || 10,
-  queueLimit: 0,
+const pool = new Pool({
+  connectionString: "postgres://portfolio_ruts_user:MNkss2ULvOvXsHPxbTho4DdLZ0HYC5oL@postgresql://portfolio_ruts_user:MNkss2ULvOvXsHPxbTho4DdLZ0HYC5oL@dpg-cv3j8odds78s73becqm0-a/portfolio_ruts.render.com:5432/portfolio_db",
+  ssl: { rejectUnauthorized: false }, // Necessário para conexão segura
 });
 
 module.exports = pool;

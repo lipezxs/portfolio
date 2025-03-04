@@ -9,21 +9,21 @@ const app = express();
 app.use(cors());
 app.use(express.json()); // Habilita JSON no body das requisições
 
-// Defina a conexão com o banco de dados
-const db = mysql.createConnection({
-    host: "ballast.proxy.rlwy.net",        // Exemplo: 'localhost' ou o host fornecido pela Render
-    user: "root",     // Exemplo: 'root'
-    password: "wSOnTWnTDGpyJcBoPAHskWxYTFASLtrQ",   // Senha do banco
-    database: "railway"    // Nome do banco de dados
+const db = mysql.createPool({
+    host: "mysql.railway.internal",     // Certifique-se de que está usando o host correto
+    user: "root",            // Seu usuário do MySQL
+    password: "wSOnTWnTDGpyJcBoPAHskWxYTFASLtrQ",          // Sua senha do MySQL
+    database: "railway",          // Seu banco de dados
+    port: 3306                      // Porta padrão do MySQL
 });
 
-// Conectar ao banco de dados
-db.connect((err) => {
+db.getConnection((err, connection) => {
     if (err) {
-        console.error('Erro ao conectar no MySQL: ', err.message);
+        console.error('Erro ao conectar ao banco de dados:', err.message);
         return;
     }
-    console.log('Conectado ao banco de dados MySQL!');
+    console.log('✅ Conectado ao banco de dados com sucesso!');
+    connection.release();
 });
 
 // 📌 Rota para salvar os dados do formulário no banco

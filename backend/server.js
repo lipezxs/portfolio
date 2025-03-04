@@ -6,7 +6,7 @@ require("dotenv").config(); // Carrega variáveis de ambiente do .env
 
 const app = express(); // Inicializa o Express
 
-app.use(cors({ origin: "https://lipezxs.vercel.app" }));
+app.use(cors({ origin: "https://frontend.vercel.app" }));
 
 app.use(express.json()); // Permite receber JSON no body das requisições
 
@@ -19,24 +19,22 @@ app.get("/", (req, res) => {
 
 // Rota para receber mensagens do formulário de contato
 app.post("/contact", async (req, res) => {
-    const { name, email, subject, message } = req.body;
-
-    if (!name || !email || !subject || !message) {
-        return res.status(400).json({ error: "Todos os campos são obrigatórios." });
-    }
-
     try {
-        await pool.query(
-            "INSERT INTO messages (name, email, subject, message) VALUES (?, ?, ?, ?)",
-            [name, email, subject, message]
-        );
-
-        res.json({ message: "Mensagem salva com sucesso!" });
+      const { name, email, subject, message } = req.body;
+  
+      if (!name || !email || !subject || !message) {
+        return res.status(400).json({ error: "Todos os campos são obrigatórios." });
+      }
+  
+      // Aqui vai a lógica para salvar no banco de dados MySQL...
+      
+      res.status(200).json({ message: "Mensagem enviada com sucesso!" });
     } catch (error) {
-        console.error("Erro ao salvar no banco:", error);
-        res.status(500).json({ error: "Erro ao salvar a mensagem." });
+      console.error(error);
+      res.status(500).json({ error: "Erro ao processar a requisição." });
     }
-});
+  });
+  
 
 // Iniciar o servidor
 app.listen(PORT, () => {

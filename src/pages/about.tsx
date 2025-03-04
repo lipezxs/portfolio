@@ -22,7 +22,7 @@ const ContactSection = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData((prev) => ({ ...prev, [name]: value }));
     setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
   };
 
@@ -117,36 +117,35 @@ const ContactSection = () => {
             Fale Comigo
           </h2>
           <form onSubmit={handleSubmit} className="max-w-2xl mx-auto">
-          {["name", "email", "subject", "message"].map((field) => (
-  <div key={field} className="mb-6">
-    <label htmlFor={field} className="block text-gray-700 dark:text-gray-300 mb-2 capitalize">
-      {field === "name" ? "Nome" : field === "email" ? "E-mail" : field === "subject" ? "Assunto" : "Mensagem"}
-    </label>
-    {field === "message" ? (
-      <textarea
-        id={field}
-        name={field}
-        value={formData[field as keyof typeof formData]} // ✅ Correção aqui
-        onChange={handleChange}
-        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white"
-        rows={5}
-        required
-      />
-    ) : (
-      <input
-        type={field === "email" ? "email" : "text"}
-        id={field}
-        name={field}
-        value={formData[field as keyof typeof formData]} // ✅ Correção aqui
-        onChange={handleChange}
-        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white"
-        required
-      />
-    )}
-    {errors[field as keyof typeof errors] && <p className="text-red-500 text-sm mt-1">{errors[field as keyof typeof errors]}</p>}
-  </div>
-))}
-
+            {(["name", "email", "subject", "message"] as const).map((field) => (
+              <div key={field} className="mb-6">
+                <label htmlFor={field} className="block text-gray-700 dark:text-gray-300 mb-2 capitalize">
+                  {field === "name" ? "Nome" : field === "email" ? "E-mail" : field === "subject" ? "Assunto" : "Mensagem"}
+                </label>
+                {field === "message" ? (
+                  <textarea
+                    id={field}
+                    name={field}
+                    value={formData[field]}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white"
+                    rows={5}
+                    required
+                  />
+                ) : (
+                  <input
+                    type={field === "email" ? "email" : "text"}
+                    id={field}
+                    name={field}
+                    value={formData[field]}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white"
+                    required
+                  />
+                )}
+                {errors[field] && <p className="text-red-500 text-sm mt-1">{errors[field]}</p>}
+              </div>
+            ))}
 
             {/* Botão de Enviar */}
             <div className="text-center">

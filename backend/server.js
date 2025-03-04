@@ -21,25 +21,26 @@ app.use(
 app.use(express.json());
 app.use(bodyParser.json());
 
-// Configuração do banco de dados usando variáveis do .env
-const connection = mysql.createConnection({
-  host: process.env.DB_HOST || "https://portfolio-k0tt.onrender.com", // Insira o host correto
-  user: process.env.DB_USER || "root",
-  password: process.env.DB_PASSWORD || "Fa876593",
-  database: process.env.DB_NAME || "portfolio",
-  port: 3306,
+// Configuração do banco de dados usando Pool de Conexões (melhor para produção)
+const pool = mysql.createPool({
+  host: process.env.DB_HOST, // Certifique-se de definir isso no Render
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  port: process.env.DB_PORT || 3306,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
 });
 
-
-
-
-// Verificar conexão com MySQL antes de iniciar o servidor
-connection.connect((err) => {
+// Testar a conexão com o banco de dados
+pool.getConnection((err, connection) => {
   if (err) {
-    console.error("❌ Erro ao conectar ao MySQL:", err);
-    return;
+    console.error("❌ Erro ao conectar ao MySQL:", err.message);
+  } else {
+    console.log("✅ Conectado ao MySQL com sucesso!");
+    connection.release(); // Liberar conexão de teste
   }
-  console.log("✅ Conectado ao MySQL com sucesso!");
 });
 
 // Rota para receber dados do formulário
@@ -54,7 +55,7 @@ app.post("/about", (req, res) => {
 
   const query = "INSERT INTO contatos (name, email, subject, message) VALUES (?, ?, ?, ?)";
 
-  connection.query(query, [name, email, subject, message], (err, results) => {
+  pool.query(query, [name, email, subject, message], (err, results) => {
     if (err) {
       console.error("❌ Erro ao salvar no MySQL:", err.sqlMessage || err);
       return res.status(500).json({ error: err.sqlMessage || "Erro ao salvar os dados." });

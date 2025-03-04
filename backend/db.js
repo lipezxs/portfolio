@@ -1,19 +1,18 @@
-const mysql = require('mysql2');
+const mysql = require('mysql');
 
-// Crie o pool de conexões
-const db = mysql.createPool({
+// Criando a conexão
+const db = mysql.createConnection({
     host: "ballast.proxy.rlwy.net",
     user: "root",
     password: "wSOnTWnTDGpyJcBoPAHskWxYTFASLtrQ",
     database: "railway"
 });
 
-// Obtenha uma conexão do pool
-db.getConnection((err, connection) => {
+// Conectando ao banco
+db.connect((err) => {
     if (err) {
-        console.error('Erro ao conectar ao banco de dados:', err.message);
+        console.error('Erro ao conectar no MySQL: ', err.message);
         return;
     }
-    console.log('Conectado ao banco de dados com sucesso!');
-    connection.release(); // Libera a conexão do pool após o uso
+    console.log('✅ Conectado ao banco de dados MySQL!');
 });

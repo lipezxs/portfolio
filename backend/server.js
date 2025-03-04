@@ -2,7 +2,7 @@ import express from "express";
 import mysql from "mysql2";
 import cors from "cors";
 import bodyParser from "body-parser";
-import "dotenv/config"; // Forma recomendada para ES Modules
+import dotenv from 'dotenv'; // For ES modules
 
 dotenv.config();
 
@@ -23,10 +23,10 @@ app.use(bodyParser.json());
 
 // Configuração do banco de dados (use um banco remoto!)
 const connection = mysql.createConnection({
-  host: process.env.localhost,
-  user: process.env.root,
-  password: process.env.Fa876593,
-  database: process.env.portfolio,
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
 });
 
 

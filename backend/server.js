@@ -12,12 +12,12 @@ app.use(cors());
 app.use(express.json()); // Habilita JSON no body das requisições
 
 // Verificar conexão com o banco
-db.connect(err => {
+db.connect((err) => {
     if (err) {
-        console.error("Erro ao conectar ao MySQL:", err);
+        console.error('Erro ao conectar no MySQL: ', err.message);
         return;
     }
-    console.log("✅ Conectado ao MySQL!");
+    console.log('✅ Conectado ao banco de dados MySQL!');
 });
 
 // 📌 Rota para salvar os dados do formulário no banco

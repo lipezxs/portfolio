@@ -23,12 +23,13 @@ app.use(bodyParser.json());
 
 // Configuração do banco de dados usando Pool de Conexões (melhor para produção)
 const connection = mysql.createConnection({
-  host: process.env.DB_HOST || "https://portfolio-k0tt.onrender.com",
-  user: process.env.DB_USER || "root",
-  password: process.env.DB_PASSWORD || "Fa876593",
-  database: process.env.DB_NAME || "portfolio",
-  port: 3306,
+  host: process.env.DB_HOST || "44.226.145.213", // IP correto do banco na Render
+  user: process.env.DB_USER || "root", // Usuário do banco
+  password: process.env.DB_PASSWORD || "Fa876593", // Senha do banco
+  database: process.env.DB_NAME || "portfolio", // Nome do banco de dados
+  port: 3306, // Porta padrão do MySQL
 });
+
 
 // Testar a conexão com o banco de dados
 pool.getConnection((err, connection) => {

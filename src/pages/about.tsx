@@ -83,12 +83,14 @@ const ContactSection = () => {
 
     setLoading(true);
     try {
-      const API_URL = "https://portfolio-k0tt.onrender.com/"; // Definir constante
-      const response = await fetch(`${API_URL}/contact`, {
-        method: "POST", 
-        headers: { "Content-Type": "application/json" }, 
+      const response = await fetch("https://portfolio-k0tt.onrender.com/contact", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
         body: JSON.stringify(formData),
-      });
+    });
+    
       
 
       const result: ApiResponse = await response.json();

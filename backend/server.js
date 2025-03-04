@@ -21,7 +21,7 @@ const db = mysql2.createPool({
     user: "root",            // Seu usuário do MySQL
     password: "wSOnTWnTDGpyJcBoPAHskWxYTFASLtrQ",          // Sua senha do MySQL
     database: "railway",          // Seu banco de dados
-    port: 51895                      // Porta padrão do MySQL
+    port: 10000                      // Porta padrão do MySQL
 });
 
 db.getConnection((err, connection) => {

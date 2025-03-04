@@ -8,7 +8,6 @@
     "build": "tsc && vite build",
     "lint": "eslint -c .eslintrc.json ./src/**/**/*.{ts,tsx} --fix",
     "preview": "vite preview"
-    
   },
   "dependencies": {
     "@heroui/button": "2.2.13",
@@ -28,7 +27,8 @@
     "body-parser": "^1.20.3",
     "clsx": "2.1.1",
     "cors": "^2.8.5",
-    "express": "^4.21.2",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
     "framer-motion": "11.15.0",
     "mysql2": "^3.12.0",
     "react": "18.3.1",

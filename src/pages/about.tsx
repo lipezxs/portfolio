@@ -72,8 +72,9 @@ const ContactSection = () => {
 
   // Função para validar e-mail
   const isValidEmail = (email: string) => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
   };
+  
 
   // Função para enviar o formulário
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -82,7 +83,9 @@ const ContactSection = () => {
 
     setLoading(true);
     try {
-  const response = await fetch("https://portfolio-k0tt.onrender.com/contact", { 
+      const API_URL = "https://portfolio-k0tt.onrender.com";
+      const response = await fetch(`${API_URL}/contact`, { // Agora está correto ✅
+
         method: "POST", 
         headers: { "Content-Type": "application/json" }, 
         body: JSON.stringify(formData),
@@ -98,8 +101,8 @@ const ContactSection = () => {
         setResponseMessage(`❌ ${result.error || "Erro ao enviar a mensagem."}`);
       }
     } catch (error) {
-      console.error("Erro:", error);
-      setResponseMessage("❌ Erro ao enviar a mensagem. Tente novamente.");
+      console.error("Erro ao enviar:", error);
+      setResponseMessage(`❌ Erro inesperado: ${error instanceof Error ? error.message : "Tente novamente."}`);
     } finally {
       setLoading(false);
     }

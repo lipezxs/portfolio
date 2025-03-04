@@ -2,6 +2,9 @@ const express = require("express");
 const mysql = require("mysql2");
 const cors = require("cors");
 
+const db = require('./db'); // Importa a conexão do banco
+
+
 const app = express();
 
 // Configurar CORS para permitir conexões do frontend

@@ -1,19 +1,19 @@
-const mysql = require("mysql2/promise");
-require("dotenv").config();
+const mysql = require('mysql2');
 
-const pool = mysql.createPool({
-    host: process.env.DB_HOST,      // Host do banco
-    port: process.env.DB_PORT,      // Porta do banco
-    user: process.env.DB_USER,      // Usuário do banco
-    password: process.env.DB_PASSWORD, // Senha do banco
-    database: process.env.DB_DATABASE, // Nome do banco
-    waitForConnections: true,
-    connectionLimit: 10,
-    queueLimit: 0,
+// Crie o pool de conexões
+const db = mysql.createPool({
+    host: "ballast.proxy.rlwy.net",
+    user: "root",
+    password: "wSOnTWnTDGpyJcBoPAHskWxYTFASLtrQ",
+    database: "railway"
 });
 
-pool.getConnection()
-    .then(() => console.log("✅ Conectado ao MySQL!"))
-    .catch(err => console.error("❌ Erro ao conectar ao MySQL:", err));
-
-module.exports = pool;
+// Obtenha uma conexão do pool
+db.getConnection((err, connection) => {
+    if (err) {
+        console.error('Erro ao conectar ao banco de dados:', err.message);
+        return;
+    }
+    console.log('Conectado ao banco de dados com sucesso!');
+    connection.release(); // Libera a conexão do pool após o uso
+});

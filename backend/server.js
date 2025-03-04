@@ -2,7 +2,7 @@ import express from "express";
 import mysql from "mysql2";
 import cors from "cors";
 import bodyParser from "body-parser";
-import dotenv from 'dotenv'; // For ES modules
+import "dotenv/config";
 
 dotenv.config();
 

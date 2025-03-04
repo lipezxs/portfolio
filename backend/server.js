@@ -6,8 +6,12 @@ require("dotenv").config(); // Carregar variáveis de ambiente do .env
 
 const app = express(); // Inicializa o Express
 
-app.use(cors({ origin: "http://localhost:5173", methods: ["POST"] }));
-
+app.use(cors({
+    origin: ["http://localhost:5173", "https://lipezxs.vercel.app"], // Permite localhost e produção
+    methods: ["POST"],
+    allowedHeaders: ["Content-Type"]
+  }));
+  
 app.use(express.json()); // Permite receber JSON no body das requisições
 
 const PORT = 5000; // Porta do servidor

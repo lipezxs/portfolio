@@ -82,11 +82,12 @@ const ContactSection = () => {
 
     setLoading(true);
     try {
-      const response = await fetch("https://portfolio-k0tt.onrender.com/about", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const response = await fetch("https://portfolio-k0tt.onrender.com/contact", { 
+        method: "POST", 
+        headers: { "Content-Type": "application/json" }, 
         body: JSON.stringify(formData),
       });
+      
 
       const result: ApiResponse = await response.json();
 

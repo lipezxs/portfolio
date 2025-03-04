@@ -11,7 +11,7 @@ app.use(express.json()); // Habilita JSON no body das requisições
 
 const mysql = require('mysql2');
 
-const db = mysql.createPool({
+const db = mysql2.createPool({
     host: "ballast.proxy.rlwy.net",     // Certifique-se de que está usando o host correto
     user: "root",            // Seu usuário do MySQL
     password: "wSOnTWnTDGpyJcBoPAHskWxYTFASLtrQ",          // Sua senha do MySQL

@@ -1,8 +1,13 @@
-const { Pool } = require("pg");
+const mysql = require("mysql2/promise");
 
-const pool = new Pool({
-  connectionString: "postgres://portfolio_ruts_user:MNkss2ULvOvXsHPxbTho4DdLZ0HYC5oL@postgresql://portfolio_ruts_user:MNkss2ULvOvXsHPxbTho4DdLZ0HYC5oL@dpg-cv3j8odds78s73becqm0-a/portfolio_ruts.render.com:5432/portfolio_db",
-  ssl: { rejectUnauthorized: false }, // Necessário para conexão segura
+const pool = mysql.createPool({
+  host: process.env.DB_HOST || "localhost",
+  user: process.env.DB_USER || "root",
+  password: process.env.DB_PASSWORD || "Fa876593",
+  database: process.env.DB_NAME || "portfolio",
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
 });
 
 module.exports = pool;

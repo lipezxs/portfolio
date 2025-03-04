@@ -1,5 +1,5 @@
 const express = require("express");
-const mysql = require('mysql'); // ou mysql2, dependendo de sua escolha
+const mysql = require('mysql2'); // ou mysql2, dependendo de sua escolha
 const cors = require("cors");
 
 
@@ -9,13 +9,14 @@ const app = express();
 app.use(cors());
 app.use(express.json()); // Habilita JSON no body das requisições
 
+const mysql = require('mysql2');
+
 const db = mysql.createPool({
-    host: process.env.DB_HOST,  // Substitua pelo seu host
-    user: process.env.DB_USER,  // Substitua pelo seu usuário
-    password: process.env.DB_PASSWORD,  // Substitua pela sua senha
-    database: process.env.DB_NAME,  // Substitua pelo seu banco de dados
-    port: 3306,  // A porta do MySQL
-    connectTimeout: 10000  // 10 segundos de timeout (padrão é 10000 ms)
+    host: "ballast.proxy.rlwy.net",     // Certifique-se de que está usando o host correto
+    user: "root",            // Seu usuário do MySQL
+    password: "wSOnTWnTDGpyJcBoPAHskWxYTFASLtrQ",          // Sua senha do MySQL
+    database: "railway",          // Seu banco de dados
+    port: 51895                      // Porta padrão do MySQL
 });
 
 db.getConnection((err, connection) => {

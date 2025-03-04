@@ -33,7 +33,7 @@ const ContactSection = () => {
     setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
   };
 
-  // Função para rastrear a posição do mouse
+  // Função para rastrear a posição do mouse (opcional)
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     setMousePosition({ x: e.clientX, y: e.clientY });
   };
@@ -74,7 +74,6 @@ const ContactSection = () => {
   const isValidEmail = (email: string) => {
     return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
   };
-  
 
   // Função para enviar o formulário
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -83,31 +82,34 @@ const ContactSection = () => {
 
     setLoading(true);
     try {
-      const response = await fetch("https://portfolio-k0tt.onrender.com/contact", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-    });
-    
-      
+        const response = await fetch("https://portfolio-k0tt.onrender.com/contact", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+        });
 
-      const result: ApiResponse = await response.json();
+        // Log do status da resposta
+        console.log('Response status:', response.status);
 
-      if (response.ok) {
-        setResponseMessage("✅ Mensagem enviada com sucesso!");
-        setFormData({ name: "", email: "", subject: "", message: "" });
-      } else {
-        setResponseMessage(`❌ ${result.error || "Erro ao enviar a mensagem."}`);
-      }
+        const result: ApiResponse = await response.json();
+
+        if (response.ok) {
+            setResponseMessage("✅ Mensagem enviada com sucesso!");
+            setFormData({ name: "", email: "", subject: "", message: "" });
+        } else {
+            // Log do erro do backend
+            console.error('Backend error:', result);
+            setResponseMessage(`❌ ${result.error || "Erro ao enviar a mensagem."}`);
+        }
     } catch (error) {
-      console.error("Erro ao enviar:", error);
-      setResponseMessage(`❌ Erro inesperado: ${error instanceof Error ? error.message : "Tente novamente."}`);
+        console.error("Erro de rede:", error);
+        setResponseMessage(`❌ Erro de conexão: Verifique sua internet ou tente novamente.`);
     } finally {
-      setLoading(false);
+        setLoading(false);
     }
-  };
+};
 
   // Limpar mensagem de resposta após 5 segundos
   useEffect(() => {

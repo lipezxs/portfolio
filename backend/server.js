@@ -1,58 +1,129 @@
-const mysql = require('mysql2'); // ou mysql2, dependendo de sua escolha
+const mysql = require('mysql2');
 const cors = require("cors");
-
-
 const express = require('express');
+require('dotenv').config();
+
 const app = express();
-const port = process.env.PORT || 51895;  // A porta usada pela Render (geralmente 10000 ou especificada no painel)
+const port = process.env.PORT || 51895;
 
-app.listen(port, () => {
-    console.log(`Servidor rodando na porta ${port}`);
+// CORS mais permissivo para debug
+app.use(cors({
+    origin: [
+        "https://portfolio-k0tt.onrender.com/contact", // Seu frontend no Render
+        "https://lipezxs.vercel.app",          // Seu frontend na Vercel
+        "http://localhost:3000"                // Local development
+    ],
+    methods: ["POST", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"]
+}));
+
+app.use(express.json());
+
+// Middleware de log adicional
+app.use((req, res, next) => {
+    console.log('Requisição recebida:', {
+        method: req.method,
+        path: req.path,
+        body: req.body,
+        headers: req.headers
+    });
+    next();
 });
 
-// Configurar CORS para permitir conexões do frontend
-app.use(cors());
-app.use(express.json()); // Habilita JSON no body das requisições
-
-const mysql2 = require('mysql2');
-
-const db = mysql2.createPool({
-    host: "ballast.proxy.rlwy.net",     // Certifique-se de que está usando o host correto
-    user: "root",            // Seu usuário do MySQL
-    password: "wSOnTWnTDGpyJcBoPAHskWxYTFASLtrQ",          // Sua senha do MySQL
-    database: "railway",          // Seu banco de dados
-    port: 51895                      // Porta padrão do MySQL
+// Configuração da pool de conexões do MySQL
+const pool = mysql.createPool({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE,
+    port: process.env.DB_PORT,
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
 });
 
-db.getConnection((err, connection) => {
+// Teste de conexão com o banco de dados
+pool.getConnection((err, connection) => {
     if (err) {
-        console.error('Erro ao conectar ao banco de dados:', err.message);
+        console.error('Erro CRÍTICO de conexão:', {
+            message: err.message,
+            code: err.code,
+            errno: err.errno,
+            sqlState: err.sqlState,
+            fatal: err.fatal
+        });
         return;
     }
-    console.log('✅ Conectado ao banco de dados com sucesso!');
+    console.log('Conexão com banco de dados estabelecida com sucesso!');
     connection.release();
 });
-// 📌 Rota para salvar os dados do formulário no banco
-app.post("/contact", (req, res) => {
-    console.log("🔹 Dados recebidos no backend:", req.body);
 
-    const { name, email, message } = req.body;
+// Rota POST com tratamento de erro detalhado
+app.post('/contact', (req, res) => {
+    const { name, email, subject, message } = req.body;
 
-    if (!name || !email || !message) {
-        console.log("🚨 ERRO: Campos faltando!", req.body);
-        return res.status(400).json({ error: "Todos os campos são obrigatórios!" });
+    console.log('Dados de contato recebidos:', { name, email, subject, message });
+
+    // Validações mais rigorosas
+    if (!name || name.trim() === '') {
+        return res.status(400).json({ error: 'Nome é obrigatório.' });
+    }
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        return res.status(400).json({ error: 'E-mail inválido.' });
+    }
+    if (!subject || subject.trim() === '') {
+        return res.status(400).json({ error: 'Assunto é obrigatório.' });
+    }
+    if (!message || message.trim() === '') {
+        return res.status(400).json({ error: 'Mensagem é obrigatória.' });
     }
 
-    const sql = "INSERT INTO contatos (nome, email, mensagem) VALUES (?, ?, ?)";
-    db.query(sql, [name, email, message], (err, result) => {
+    const query = 'INSERT INTO contact_messages (name, email, subject, message) VALUES (?, ?, ?, ?)';
+    
+    pool.query(query, [name, email, subject, message], (err, result) => {
         if (err) {
-            console.error("🚨 ERRO NO BANCO:", err.sqlMessage || err);
-            return res.status(500).json({ error: "Erro ao salvar no banco" });
+            console.error('Erro DETALHADO ao salvar no banco:', {
+                message: err.message,
+                code: err.code,
+                errno: err.errno,
+                sqlState: err.sqlState,
+                fatal: err.fatal,
+                stack: err.stack
+            });
+            
+            return res.status(500).json({ 
+                error: 'Erro interno ao salvar mensagem', 
+                details: err.message 
+            });
         }
-
-        console.log("✅ Dados inseridos com sucesso!", result);
-        res.json({ message: "Formulário enviado e salvo no banco!" });
+        
+        console.log('Mensagem salva com sucesso:', result);
+        res.status(200).json({ message: 'Mensagem enviada com sucesso!' });
     });
 });
 
+// Rota de health check
+app.get('/health', (req, res) => {
+    res.status(200).json({ 
+        status: 'Servidor online', 
+        timestamp: new Date().toISOString() 
+    });
+});
+// Middleware para tratamento de erros 404
+app.use((req, res, next) => {
+    res.status(404).json({ error: 'Rota não encontrada' });
+});
 
+// Middleware de tratamento de erros global
+app.use((err, req, res, next) => {
+    console.error('Erro não tratado:', err);
+    res.status(500).json({ 
+        error: 'Erro interno do servidor', 
+        message: err.message 
+    });
+});
+
+// Inicia o servidor
+app.listen(port, () => {
+    console.log(`Servidor rodando na porta ${port}`);
+});

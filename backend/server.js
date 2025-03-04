@@ -1,8 +1,6 @@
 const express = require("express");
-const mysql = require("mysql2");
+const mysql = require('mysql'); // ou mysql2, dependendo de sua escolha
 const cors = require("cors");
-
-const db = require('./db'); // Importa a conexão do banco
 
 
 const app = express();
@@ -11,13 +9,21 @@ const app = express();
 app.use(cors());
 app.use(express.json()); // Habilita JSON no body das requisições
 
-// Verificar conexão com o banco
+// Defina a conexão com o banco de dados
+const db = mysql.createConnection({
+    host: "ballast.proxy.rlwy.net",        // Exemplo: 'localhost' ou o host fornecido pela Render
+    user: "root",     // Exemplo: 'root'
+    password: "wSOnTWnTDGpyJcBoPAHskWxYTFASLtrQ",   // Senha do banco
+    database: "railway"    // Nome do banco de dados
+});
+
+// Conectar ao banco de dados
 db.connect((err) => {
     if (err) {
         console.error('Erro ao conectar no MySQL: ', err.message);
         return;
     }
-    console.log('✅ Conectado ao banco de dados MySQL!');
+    console.log('Conectado ao banco de dados MySQL!');
 });
 
 // 📌 Rota para salvar os dados do formulário no banco

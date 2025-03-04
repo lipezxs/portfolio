@@ -2,10 +2,7 @@ import express from "express";
 import mysql from "mysql2";
 import cors from "cors";
 import bodyParser from "body-parser";
-import "dotenv/config";
-
-dotenv.config();
-
+import "dotenv/config"; // Já carrega o .env automaticamente
 
 const app = express();
 
@@ -19,19 +16,19 @@ app.use(
 );
 
 // Middleware
+app.use(express.json());
 app.use(bodyParser.json());
 
-// Configuração do banco de dados (use um banco remoto!)
-const connection = mysql.createConnection({
+// Configuração do banco de dados
+const pool = mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-});
-
+}).promise();
 
 // Rota para receber dados do formulário
-app.post("/about", async (req, res) => {
+app.post("/contact", async (req, res) => {
   const { name, email, subject, message } = req.body;
 
   if (!name || !email || !subject || !message) {
@@ -39,7 +36,7 @@ app.post("/about", async (req, res) => {
   }
 
   try {
-    await connection.execute(
+    await pool.execute(
       "INSERT INTO contatos (name, email, subject, message) VALUES (?, ?, ?, ?)",
       [name, email, subject, message]
     );
@@ -50,7 +47,7 @@ app.post("/about", async (req, res) => {
   }
 });
 
-// Iniciar servidor (Railway ou Render)
+// Iniciar servidor
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);

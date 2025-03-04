@@ -22,7 +22,7 @@ const ContactSection = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    setErrors({ ...errors, [name]: "" }); // Limpa o erro ao digitar
+    setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -64,7 +64,7 @@ const ContactSection = () => {
     e.preventDefault();
     if (validateForm()) {
       try {
-        const response = await fetch("https://lipezxs.vercel.app/api/rota", {
+        const response = await fetch("https://portfolio-k0tt.onrender.com/contact", { 
           method: "POST",
           headers: {
             "Content-Type": "application/json",

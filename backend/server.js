@@ -10,11 +10,12 @@ app.use(cors());
 app.use(express.json()); // Habilita JSON no body das requisições
 
 const db = mysql.createPool({
-    host: "ballast.proxy.rlwy.net",     // Certifique-se de que está usando o host correto
-    user: "root",            // Seu usuário do MySQL
-    password: "wSOnTWnTDGpyJcBoPAHskWxYTFASLtrQ",          // Sua senha do MySQL
-    database: "railway",          // Seu banco de dados
-    port: 3306                      // Porta padrão do MySQL
+    host: process.env.DB_HOST,  // Substitua pelo seu host
+    user: process.env.DB_USER,  // Substitua pelo seu usuário
+    password: process.env.DB_PASSWORD,  // Substitua pela sua senha
+    database: process.env.DB_NAME,  // Substitua pelo seu banco de dados
+    port: 3306,  // A porta do MySQL
+    connectTimeout: 10000  // 10 segundos de timeout (padrão é 10000 ms)
 });
 
 db.getConnection((err, connection) => {
@@ -25,7 +26,6 @@ db.getConnection((err, connection) => {
     console.log('✅ Conectado ao banco de dados com sucesso!');
     connection.release();
 });
-
 // 📌 Rota para salvar os dados do formulário no banco
 app.post("/contact", (req, res) => {
     console.log("🔹 Dados recebidos no backend:", req.body);

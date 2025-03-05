@@ -23,6 +23,8 @@
     "@heroui/theme": "2.4.9",
     "@heroui/use-theme": "2.1.5",
     "@react-aria/visually-hidden": "3.8.19",
+    "@react-three/drei": "^10.0.4",
+    "@react-three/fiber": "^9.0.4",
     "@react-types/shared": "3.27.0",
     "axios": "^1.8.1",
     "body-parser": "^1.20.3",
@@ -39,7 +41,8 @@
     "react-icons": "^5.5.0",
     "react-router-dom": "6.23.0",
     "tailwind-variants": "0.3.0",
-    "tailwindcss": "3.4.16"
+    "tailwindcss": "3.4.16",
+    "three": "^0.174.0"
   },
   "devDependencies": {
     "@types/node": "20.5.7",

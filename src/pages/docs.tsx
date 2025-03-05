@@ -1,7 +1,7 @@
 import DefaultLayout from "@/layouts/default";
 import { useState } from "react";
 import { FaReact } from "react-icons/fa"; // Ícone do React
-import { SiJavascript, SiTypescript, SiMysql } from "react-icons/si"; // Ícones de JavaScript, TypeScript e MySQL
+import { SiJavascript, SiTypescript, SiMysql, SiNodedotjs, SiTailwindcss } from "react-icons/si"; // Ícones de JavaScript, TypeScript, MySQL, Node.js e Tailwind CSS
 import { motion } from "framer-motion"; // Importe o Framer Motion
 
 const IndexPage = () => {
@@ -37,21 +37,21 @@ const IndexPage = () => {
         />
 
         {/* Conteúdo Principal */}
-        <main className="flex-grow flex items-center justify-center p-4">
+        <main className="flex-grow flex items-center justify-center p-4 md:p-8">
           {/* Seção Sobre Mim */}
           <motion.section
             id="about"
-            className="w-full max-w-4xl"
+            className="w-full max-w-4xl mx-auto"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3, duration: 1 }}
           >
-            <div className="flex flex-col md:flex-row items-center justify-center gap-8">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12">
               {/* Coluna A (Texto) */}
               <div className="md:w-1/2 text-center md:text-left">
                 <header>
                   <motion.h2
-                    className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6 relative inline-block"
+                    className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6 md:mb-8"
                     initial={{ y: -20 }}
                     animate={{ y: 0 }}
                     transition={{ duration: 0.6, ease: "easeOut" }}
@@ -71,7 +71,7 @@ const IndexPage = () => {
                 </div>
                 <motion.button
                   onClick={handleDownloadCV}
-                  className="mt-6 px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                  className="mt-6 md:mt-8 px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.5, duration: 1 }}
@@ -81,15 +81,15 @@ const IndexPage = () => {
 
                 {/* Seção de Conhecimentos */}
                 <motion.div
-                  className="mt-8"
+                  className="mt-8 md:mt-10"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.7, duration: 1 }}
                 >
-                  <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-4">
+                  <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-4 md:mb-6">
                     Skills
                   </h3>
-                  <div className="flex gap-4 md:gap-6 justify-center md:justify-start">
+                  <div className="flex flex-wrap gap-4 md:gap-6 justify-center md:justify-start">
                     {/* Ícone React */}
                     <motion.div
                       className="flex flex-col items-center"
@@ -97,7 +97,7 @@ const IndexPage = () => {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.2, duration: 0.5 }}
                     >
-                      <FaReact className="w-8 h-8 md:w-12 md:h-12 text-blue-500 hover:text-blue-600 transition-colors duration-300" />
+                      <FaReact className="w-8 h-8 md:w-10 md:h-10 text-blue-500 hover:text-blue-600 transition-colors duration-300" />
                       <span className="text-xs md:text-sm text-gray-600 dark:text-gray-300 mt-2">
                         React
                       </span>
@@ -110,7 +110,7 @@ const IndexPage = () => {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.4, duration: 0.5 }}
                     >
-                      <SiJavascript className="w-8 h-8 md:w-12 md:h-12 text-yellow-500 hover:text-yellow-600 transition-colors duration-300" />
+                      <SiJavascript className="w-8 h-8 md:w-10 md:h-10 text-yellow-500 hover:text-yellow-600 transition-colors duration-300" />
                       <span className="text-xs md:text-sm text-gray-600 dark:text-gray-300 mt-2">
                         JavaScript
                       </span>
@@ -123,7 +123,7 @@ const IndexPage = () => {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.6, duration: 0.5 }}
                     >
-                      <SiTypescript className="w-8 h-8 md:w-12 md:h-12 text-blue-600 hover:text-blue-700 transition-colors duration-300" />
+                      <SiTypescript className="w-8 h-8 md:w-10 md:h-10 text-blue-600 hover:text-blue-700 transition-colors duration-300" />
                       <span className="text-xs md:text-sm text-gray-600 dark:text-gray-300 mt-2">
                         TypeScript
                       </span>
@@ -136,9 +136,35 @@ const IndexPage = () => {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.8, duration: 0.5 }}
                     >
-                      <SiMysql className="w-8 h-8 md:w-12 md:h-12 text-orange-500 hover:text-orange-600 transition-colors duration-300" />
+                      <SiMysql className="w-8 h-8 md:w-10 md:h-10 text-orange-500 hover:text-orange-600 transition-colors duration-300" />
                       <span className="text-xs md:text-sm text-gray-600 dark:text-gray-300 mt-2">
                         MySQL
+                      </span>
+                    </motion.div>
+
+                    {/* Ícone Node.js */}
+                    <motion.div
+                      className="flex flex-col items-center"
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 1.0, duration: 0.5 }}
+                    >
+                      <SiNodedotjs className="w-8 h-8 md:w-10 md:h-10 text-green-500 hover:text-green-600 transition-colors duration-300" />
+                      <span className="text-xs md:text-sm text-gray-600 dark:text-gray-300 mt-2">
+                        Node.js
+                      </span>
+                    </motion.div>
+
+                    {/* Ícone Tailwind CSS */}
+                    <motion.div
+                      className="flex flex-col items-center"
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 1.2, duration: 0.5 }}
+                    >
+                      <SiTailwindcss className="w-8 h-8 md:w-10 md:h-10 text-cyan-500 hover:text-cyan-600 transition-colors duration-300" />
+                      <span className="text-xs md:text-sm text-gray-600 dark:text-gray-300 mt-2">
+                        Tailwind CSS
                       </span>
                     </motion.div>
                   </div>

@@ -92,6 +92,7 @@ const IndexPage = () => {
               </a>
             </motion.div>
           </motion.section>
+        {/* Modelo 3D do Notebook ao lado */}
         </main>
 
         {/* Footer com Blur Interativo */}

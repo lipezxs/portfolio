@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { Button } from "@heroui/button";
 import { motion } from "framer-motion"; // Importando framer-motion
 
+
+
 const IndexPage = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [typedText, setTypedText] = useState("");
@@ -13,7 +15,7 @@ const IndexPage = () => {
     if (typedText.length < fullText.length) {
       const timeout = setTimeout(() => {
         setTypedText(fullText.slice(0, typedText.length + 1));
-      }, 100);
+      }, Math.random() * 50 + 50); // Entre 50ms e 100ms
       return () => clearTimeout(timeout);
     }
   }, [typedText]);
@@ -77,9 +79,9 @@ const IndexPage = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.8, ease: "easeOut" }}
-            >
-              <a href="/about">
-                <Button color="primary" variant="ghost">Fale comigo!</Button>
+            > 
+              <a href="/about" aria-label="Fale comigo">
+             <Button color="primary" variant="ghost">Fale comigo!</Button>
               </a>
             </motion.div>
           </motion.section>

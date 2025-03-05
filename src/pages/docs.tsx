@@ -72,7 +72,7 @@ const IndexPage = () => {
                 {/* Seção de Conhecimentos */}
                 <div className="mt-8">
                   <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-4">
-                    Conhecimentos
+                    Skills
                   </h3>
                   <div className="flex gap-4 md:gap-6 justify-center md:justify-start">
                     {/* Ícone React */}

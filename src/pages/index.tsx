@@ -44,7 +44,7 @@ const IndexPage = () => {
         <main className="flex-grow flex items-center justify-center p-4 pt-2"> {/* Ajuste aqui: pt-16 para subir o conteúdo */}
           {/* Seção centralizada */}
           <motion.section
-            className="flex flex-col items-center justify-center gap-4 w-full max-w-2xl px-4"
+            className="flex flex-col items-center justify-center gap-6 w-full max-w-2xl px-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
@@ -75,7 +75,7 @@ const IndexPage = () => {
 
             {/* Botões */}
             <motion.div
-              className="flex gap-4 mt-8"
+              className="flex gap-6 mt-8"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.8, ease: "easeOut" }}
@@ -84,9 +84,9 @@ const IndexPage = () => {
                 <Button
                   color="primary"
                   variant="ghost"
-                  className="group flex items-center gap-2 px-6 py-3 rounded-lg transition-all duration-300 hover:bg-blue-500 hover:text-white hover:shadow-lg hover:scale-105"
+                  className="group flex items-center justify-center gap-2 px-8 py-4 text-lg rounded-lg transition-all duration-300 hover:bg-blue-500 hover:text-white hover:shadow-lg hover:scale-105"
                 >
-                  <MessageCircle className="w-5 h-5 group-hover:animate-bounce" /> {/* Ícone com animação */}
+                  <MessageCircle className="w-6 h-6 group-hover:animate-bounce" /> {/* Ícone com animação */}
                   <span>Fale comigo!</span>
                 </Button>
               </a>

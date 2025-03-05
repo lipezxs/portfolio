@@ -3,8 +3,6 @@ import { useState, useEffect } from "react";
 import { Button } from "@heroui/button";
 import { motion } from "framer-motion"; // Importando framer-motion
 
-
-
 const IndexPage = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [typedText, setTypedText] = useState("");
@@ -79,9 +77,9 @@ const IndexPage = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.8, ease: "easeOut" }}
-            > 
+            >
               <a href="/about" aria-label="Fale comigo">
-             <Button color="primary" variant="ghost">Fale comigo!</Button>
+                <Button color="primary" variant="ghost">Fale comigo!</Button>
               </a>
             </motion.div>
           </motion.section>
@@ -89,7 +87,7 @@ const IndexPage = () => {
 
         {/* Footer com Blur Interativo */}
         <footer
-          className="py-6 bg-white/10 dark:bg-gray-800/10 backdrop-blur-md border-t border-gray-200/10 dark:border-gray-700/10"
+          className="py-6 bg-white/10 dark:bg-gray-800/10 backdrop-blur-md border-t border-gray-200/10 dark:border-gray-700/10 mt-auto"
           style={{
             background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(59, 130, 246, 0.1) 0%, rgba(0, 0, 0, 0) 50%)`,
           }}

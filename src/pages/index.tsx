@@ -31,11 +31,12 @@ const IndexPage = () => {
         className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900 overflow-hidden"
         onMouseMove={handleMouseMove}
       >
-        {/* Efeito de gradiente no fundo */}
+        {/* Fundo animado */}
         <div
-          className="absolute inset-0 pointer-events-none"
+          className="fixed inset-0 pointer-events-none"
           style={{
             background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(59, 130, 246, 0.1) 0%, rgba(0, 0, 0, 0) 100%)`,
+            zIndex: 0, // Define um z-index baixo para o gradiente
           }}
         />
 

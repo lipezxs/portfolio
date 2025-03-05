@@ -133,13 +133,13 @@ const ContactSection = () => {
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
-            background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(59, 130, 246, 0.1) 0%, rgba(0, 0, 0, 0) 50%)`,
+            background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(59, 130, 246, 0.1) 0%, rgba(0, 0, 0, 0) 100%)`,
           }}
         />
 
         <div className="container mx-auto px-4 relative">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white text-center mb-8">
-            Fale Comigo
+            Fale Comigo!
           </h2>
           <form onSubmit={handleSubmit} className="max-w-2xl mx-auto">
             {(["name", "email", "subject", "message"] as const).map((field) => (

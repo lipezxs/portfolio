@@ -1,26 +1,19 @@
 import DefaultLayout from "@/layouts/default";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { FaReact } from "react-icons/fa"; // Ícone do React
 import { SiJavascript, SiTypescript, SiMysql } from "react-icons/si"; // Ícones de JavaScript, TypeScript e MySQL
 
 const IndexPage = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [typedText, setTypedText] = useState("");
-  const fullText = "Desenvolvedor Web front-end.";
-
-  // Efeito para animação de digitação
-  useEffect(() => {
-    if (typedText.length < fullText.length) {
-      const timeout = setTimeout(() => {
-        setTypedText(fullText.slice(0, typedText.length + 1));
-      }, 100);
-      return () => clearTimeout(timeout);
-    }
-  }, [typedText]);
 
   // Atualiza a posição do mouse
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     setMousePosition({ x: e.clientX, y: e.clientY });
+  };
+
+  // Função para abrir o currículo no Google Drive
+  const handleDownloadCV = () => {
+    window.open("https://drive.google.com/file/d/1UMCBmWoRNgN_TLYlA149aVRAGey9QKiT/view?usp=drive_link", "_blank");
   };
 
   return (
@@ -30,11 +23,12 @@ const IndexPage = () => {
         className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900 overflow-hidden"
         onMouseMove={handleMouseMove}
       >
-        {/* Efeito de gradiente no fundo */}
+        {/* Fundo animado */}
         <div
-          className="absolute inset-0 pointer-events-none"
+          className="fixed inset-0 pointer-events-none"
           style={{
-            background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(59, 130, 246, 0.1) 0%, rgba(0, 0, 0, 0) 50%)`,
+            background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(59, 130, 246, 0.1) 0%, rgba(0, 0, 0, 0) 100%)`,
+            zIndex: 0, // Define um z-index baixo para o gradiente
           }}
         />
 
@@ -48,25 +42,23 @@ const IndexPage = () => {
                 <header>
                   <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6 relative inline-block">
                     Sobre mim
-                    <span className="absolute bottom-0 left-0 w-full h-1 bg-purple-500 transform scale-x-0 origin-left transition-transform duration-500 group-hover:scale-x-100"></span>
                   </h2>
                 </header>
                 <div className="text-gray-600 dark:text-gray-300 leading-relaxed space-y-4 text-sm md:text-base">
                   <p>
-                    Me chamo Felipe Alves, cursando Análise e Desenvolvimento de Sistemas
-                    pela UCB - Universidade Católica de Brasília e desenvolvedor web Front-end.
+                    Sou Felipe Alves, estudante de Análise e Desenvolvimento de Sistemas na UCB e
+                    desenvolvedor web Front-end com experiência em suporte técnico e manutenção de computadores.
                   </p>
                   <p>
-                    Tenho uma trajetória de cerca de 2 anos trabalhando com suporte técnico e manutenção de computadores, o que me tornou um profissional dedicado e organizado.
-                  </p>
-                  <p>
-                    Hoje na área de desenvolvimento, vivo o aprendizado contínuo, focando em tecnologias JavaScript, React, TypeScript e MySQL. Busco oportunidades no mercado como dev e, em um futuro próximo, viso me tornar um desenvolvedor Full Stack.
+                    Atualmente, foco em tecnologias como JavaScript, React, TypeScript e MySQL, buscando oportunidades
+                    como desenvolvedor e com o objetivo de me tornar Full Stack.
                   </p>
                 </div>
                 <button
+                  onClick={handleDownloadCV}
                   className="mt-6 px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
                 >
-                  Baixar Currículo
+                  Ver Currículo
                 </button>
 
                 {/* Seção de Conhecimentos */}
@@ -113,7 +105,7 @@ const IndexPage = () => {
               {/* Coluna B (Imagem) */}
               <div className="md:w-1/2 flex justify-center">
                 <img
-                  src="./src/img/felipe.jpg" // Substitua pelo caminho correto da imagem
+                  src="/felipe.jpg" // Certifique-se de que o caminho da imagem está correto
                   alt="Imagem de Felipe Alves principal"
                   className="rounded-lg shadow-2xl w-full max-w-xs md:max-w-sm transform transition-all duration-300 hover:scale-105 hover:shadow-xl"
                 />

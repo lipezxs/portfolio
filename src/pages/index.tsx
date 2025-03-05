@@ -1,7 +1,8 @@
 import DefaultLayout from "@/layouts/default";
 import { useState, useEffect } from "react";
 import { Button } from "@heroui/button";
-import { motion } from "framer-motion"; // Importando framer-motion
+import { motion } from "framer-motion";
+import { MessageCircle } from "react-feather"; // Importando um ícone
 
 const IndexPage = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -34,12 +35,12 @@ const IndexPage = () => {
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
-            background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(59, 130, 246, 0.1) 0%, rgba(0, 0, 0, 0) 50%)`,
+            background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(59, 130, 246, 0.1) 0%, rgba(0, 0, 0, 0) 100%)`,
           }}
         />
 
         {/* Conteúdo Principal */}
-        <main className="flex-grow flex items-center justify-center p-4">
+        <main className="flex-grow flex items-center justify-center p-4 pt-2"> {/* Ajuste aqui: pt-16 para subir o conteúdo */}
           {/* Seção centralizada */}
           <motion.section
             className="flex flex-col items-center justify-center gap-4 w-full max-w-2xl px-4"
@@ -79,7 +80,14 @@ const IndexPage = () => {
               transition={{ delay: 0.6, duration: 0.8, ease: "easeOut" }}
             >
               <a href="/about" aria-label="Fale comigo">
-                <Button color="primary" variant="ghost">Fale comigo!</Button>
+                <Button
+                  color="primary"
+                  variant="ghost"
+                  className="group flex items-center gap-2 px-6 py-3 rounded-lg transition-all duration-300 hover:bg-blue-500 hover:text-white hover:shadow-lg hover:scale-105"
+                >
+                  <MessageCircle className="w-5 h-5 group-hover:animate-bounce" /> {/* Ícone com animação */}
+                  <span>Fale comigo!</span>
+                </Button>
               </a>
             </motion.div>
           </motion.section>
@@ -107,8 +115,17 @@ const IndexPage = () => {
           50% { opacity: 1; }
         }
 
+        @keyframes bounce {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-5px); }
+        }
+
         .animate-blink {
           animation: blink 0.8s infinite;
+        }
+
+        .group-hover\:animate-bounce {
+          animation: bounce 0.5s;
         }
       `}</style>
     </DefaultLayout>

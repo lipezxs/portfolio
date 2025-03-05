@@ -80,7 +80,11 @@ const IndexPage = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.8, ease: "easeOut" }}
             >
-              <a href="/about" aria-label="Fale comigo">
+              <a
+                href="/about"
+                aria-label="Fale comigo"
+                className="w-full block" // Faz o link ocupar toda a largura
+              >
                 <Button
                   color="primary"
                   variant="ghost"

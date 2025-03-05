@@ -1,8 +1,6 @@
 import DefaultLayout from "@/layouts/default";
 import { useState, useEffect } from "react";
-import { Button } from "@heroui/button";
 import { motion } from "framer-motion";
-import { MessageCircle } from "react-feather"; // Importando um ícone
 
 const IndexPage = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });

@@ -85,14 +85,12 @@ const IndexPage = () => {
                 aria-label="Fale comigo"
                 className="w-full block" // Faz o link ocupar toda a largura
               >
-                <Button
-                  color="primary"
-                  variant="ghost"
-                  className="group flex items-center justify-center gap-2 px-8 py-4 text-lg rounded-lg transition-all duration-300 hover:bg-blue-500 hover:text-white hover:shadow-lg hover:scale-105"
+                <button
+                  
+                  className="mt-6 px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
                 >
-                  <MessageCircle className="w-6 h-6 group-hover:animate-bounce" /> {/* Ícone com animação */}
-                  <span>Fale comigo!</span>
-                </Button>
+                  Fale comigo!
+                </button>
               </a>
             </motion.div>
           </motion.section>

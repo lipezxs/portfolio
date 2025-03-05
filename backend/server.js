@@ -3,19 +3,25 @@ const cors = require("cors");
 const express = require('express');
 require('dotenv').config();
 
+
+console.log('Servidor iniciado...');
+app.listen(port, () => {
+    console.log(`Servidor rodando na porta ${port}`);
+});
+
 const app = express();
 const port = process.env.PORT || 51895;
+app.listen(port, () => {
+    console.log(`Servidor rodando na porta ${port}`);
+});
 
 // CORS mais permissivo para debug
 app.use(cors({
-    origin: [
-        "https://portfolio-k0tt.onrender.com/contact", // Seu frontend no Render
-        "https://lipezxs.vercel.app",          // Seu frontend na Vercel
-        "http://localhost:3000"                // Local development
-    ],
+    origin: '*',  // Permite todas as origens, útil para debug
     methods: ["POST", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"]
 }));
+
 
 app.use(express.json());
 
@@ -39,7 +45,9 @@ const pool = mysql.createPool({
     port: process.env.DB_PORT,
     waitForConnections: true,
     connectionLimit: 10,
-    queueLimit: 0
+    queueLimit: 0,
+    connectTimeout: 30000,  // Aumenta para 30 segundos
+    acquireTimeout: 30000,  // Aumenta para 30 segundos
 });
 
 // Teste de conexão com o banco de dados

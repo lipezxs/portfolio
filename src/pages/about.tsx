@@ -1,5 +1,6 @@
 import DefaultLayout from "@/layouts/default";
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
 // Interface para o tipo de resposta do backend
 interface ApiResponse {
@@ -33,7 +34,7 @@ const ContactSection = () => {
     setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
   };
 
-  // Função para rastrear a posição do mouse (opcional)
+  // Função para rastrear a posição do mouse
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     setMousePosition({ x: e.clientX, y: e.clientY });
   };
@@ -92,21 +93,15 @@ const ContactSection = () => {
         body: JSON.stringify(formData), // Enviar os dados reais do formulário
       });
 
-      // Log do status da resposta
-      console.log('Response status:', response.status);
-
       const result: ApiResponse = await response.json();
 
       if (response.ok) {
         setResponseMessage("✅ Mensagem enviada com sucesso!");
         setFormData({ name: "", email: "", subject: "", message: "" });
       } else {
-        // Log do erro do backend
-        console.error('Backend error:', result);
         setResponseMessage(`❌ ${result.error || "Erro ao enviar a mensagem."}`);
       }
     } catch (error) {
-      console.error("Erro de rede:", error);
       setResponseMessage(`❌ Erro de conexão: Verifique sua internet ou tente novamente.`);
     } finally {
       setLoading(false);
@@ -132,16 +127,23 @@ const ContactSection = () => {
           className="fixed inset-0 pointer-events-none"
           style={{
             background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(59, 130, 246, 0.1) 0%, rgba(0, 0, 0, 0) 100%)`,
-            zIndex: 0, // Fundo com z-index baixo
+            zIndex: 0,
           }}
         />
 
         {/* Conteúdo da página */}
         <main className="flex-grow flex items-center justify-center relative z-10">
           <section className="container mx-auto px-4 py-8 md:py-12">
-            <h2 className="text-3xl font-bold text-center text-gray-900 dark:text-white mb-8 md:mb-12">
+            {/* Título com animação de Fade */}
+            <motion.h2
+              className="text-3xl font-bold text-center text-gray-900 dark:text-white mb-8 md:mb-12"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1 }}
+            >
               Fale Comigo!
-            </h2>
+            </motion.h2>
+
             <form onSubmit={handleSubmit} className="max-w-2xl mx-auto">
               {(["name", "email", "subject", "message"] as const).map((field) => (
                 <div key={field} className="mb-6">
@@ -149,7 +151,7 @@ const ContactSection = () => {
                     {field === "name" ? "Nome" : field === "email" ? "E-mail" : field === "subject" ? "Assunto" : "Mensagem"}
                   </label>
                   {field === "message" ? (
-                    <textarea
+                    <motion.textarea
                       id={field}
                       name={field}
                       value={formData[field]}
@@ -157,9 +159,12 @@ const ContactSection = () => {
                       className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white"
                       rows={5}
                       required
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 1 }}
                     />
                   ) : (
-                    <input
+                    <motion.input
                       type={field === "email" ? "email" : "text"}
                       id={field}
                       name={field}
@@ -167,15 +172,18 @@ const ContactSection = () => {
                       onChange={handleChange}
                       className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white"
                       required
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 1 }}
                     />
                   )}
                   {errors[field] && <p className="text-red-500 text-sm mt-1">{errors[field]}</p>}
                 </div>
               ))}
 
-              {/* Botão de Enviar */}
-              <div className="text-center">
-                <button
+              {/* Botão de Enviar com animação de escala */}
+              <motion.div className="text-center">
+                <motion.button
                   type="submit"
                   className={`px-6 py-3 font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg ${
                     loading
@@ -183,22 +191,27 @@ const ContactSection = () => {
                       : "bg-blue-500 text-white hover:bg-blue-600 hover:shadow-xl"
                   }`}
                   disabled={loading}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
                 >
                   {loading ? "Enviando..." : "Enviar Mensagem"}
-                </button>
-              </div>
+                </motion.button>
+              </motion.div>
             </form>
 
             {/* Mensagem de Resposta */}
             {responseMessage && (
-              <p
+              <motion.p
                 className={`mt-4 text-center font-semibold ${
                   responseMessage.includes("sucesso") ? "text-green-500" : "text-red-500"
                 }`}
                 aria-live="polite"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1 }}
               >
                 {responseMessage}
-              </p>
+              </motion.p>
             )}
           </section>
         </main>

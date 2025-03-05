@@ -2,6 +2,7 @@ import DefaultLayout from "@/layouts/default";
 import { useState } from "react";
 import { FaReact } from "react-icons/fa"; // Ícone do React
 import { SiJavascript, SiTypescript, SiMysql } from "react-icons/si"; // Ícones de JavaScript, TypeScript e MySQL
+import { motion } from "framer-motion"; // Importe o Framer Motion
 
 const IndexPage = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -24,25 +25,39 @@ const IndexPage = () => {
         onMouseMove={handleMouseMove}
       >
         {/* Fundo animado */}
-        <div
+        <motion.div
           className="fixed inset-0 pointer-events-none"
           style={{
             background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(59, 130, 246, 0.1) 0%, rgba(0, 0, 0, 0) 100%)`,
             zIndex: 0, // Define um z-index baixo para o gradiente
           }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1.5, ease: "easeInOut" }}
         />
 
         {/* Conteúdo Principal */}
         <main className="flex-grow flex items-center justify-center p-4">
           {/* Seção Sobre Mim */}
-          <section id="about" className="w-full max-w-4xl">
+          <motion.section
+            id="about"
+            className="w-full max-w-4xl"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3, duration: 1 }}
+          >
             <div className="flex flex-col md:flex-row items-center justify-center gap-8">
               {/* Coluna A (Texto) */}
               <div className="md:w-1/2 text-center md:text-left">
                 <header>
-                  <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6 relative inline-block">
+                  <motion.h2
+                    className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6 relative inline-block"
+                    initial={{ y: -20 }}
+                    animate={{ y: 0 }}
+                    transition={{ duration: 0.6, ease: "easeOut" }}
+                  >
                     Sobre mim
-                  </h2>
+                  </motion.h2>
                 </header>
                 <div className="text-gray-600 dark:text-gray-300 leading-relaxed space-y-4 text-sm md:text-base">
                   <p>
@@ -54,79 +69,115 @@ const IndexPage = () => {
                     como desenvolvedor e com o objetivo de me tornar Full Stack.
                   </p>
                 </div>
-                <button
+                <motion.button
                   onClick={handleDownloadCV}
                   className="mt-6 px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.5, duration: 1 }}
                 >
                   Ver Currículo
-                </button>
+                </motion.button>
 
                 {/* Seção de Conhecimentos */}
-                <div className="mt-8">
+                <motion.div
+                  className="mt-8"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.7, duration: 1 }}
+                >
                   <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-4">
                     Skills
                   </h3>
                   <div className="flex gap-4 md:gap-6 justify-center md:justify-start">
                     {/* Ícone React */}
-                    <div className="flex flex-col items-center">
+                    <motion.div
+                      className="flex flex-col items-center"
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.2, duration: 0.5 }}
+                    >
                       <FaReact className="w-8 h-8 md:w-12 md:h-12 text-blue-500 hover:text-blue-600 transition-colors duration-300" />
                       <span className="text-xs md:text-sm text-gray-600 dark:text-gray-300 mt-2">
                         React
                       </span>
-                    </div>
+                    </motion.div>
 
                     {/* Ícone JavaScript */}
-                    <div className="flex flex-col items-center">
+                    <motion.div
+                      className="flex flex-col items-center"
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.4, duration: 0.5 }}
+                    >
                       <SiJavascript className="w-8 h-8 md:w-12 md:h-12 text-yellow-500 hover:text-yellow-600 transition-colors duration-300" />
                       <span className="text-xs md:text-sm text-gray-600 dark:text-gray-300 mt-2">
                         JavaScript
                       </span>
-                    </div>
+                    </motion.div>
 
                     {/* Ícone TypeScript */}
-                    <div className="flex flex-col items-center">
+                    <motion.div
+                      className="flex flex-col items-center"
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.6, duration: 0.5 }}
+                    >
                       <SiTypescript className="w-8 h-8 md:w-12 md:h-12 text-blue-600 hover:text-blue-700 transition-colors duration-300" />
                       <span className="text-xs md:text-sm text-gray-600 dark:text-gray-300 mt-2">
                         TypeScript
                       </span>
-                    </div>
+                    </motion.div>
 
                     {/* Ícone MySQL */}
-                    <div className="flex flex-col items-center">
+                    <motion.div
+                      className="flex flex-col items-center"
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.8, duration: 0.5 }}
+                    >
                       <SiMysql className="w-8 h-8 md:w-12 md:h-12 text-orange-500 hover:text-orange-600 transition-colors duration-300" />
                       <span className="text-xs md:text-sm text-gray-600 dark:text-gray-300 mt-2">
                         MySQL
                       </span>
-                    </div>
+                    </motion.div>
                   </div>
-                </div>
+                </motion.div>
               </div>
 
               {/* Coluna B (Imagem) */}
-              <div className="md:w-1/2 flex justify-center">
+              <motion.div
+                className="md:w-1/2 flex justify-center"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 1, duration: 0.8 }}
+              >
                 <img
                   src="/felipe.jpg" // Certifique-se de que o caminho da imagem está correto
                   alt="Imagem de Felipe Alves principal"
                   className="rounded-lg shadow-2xl w-full max-w-xs md:max-w-sm transform transition-all duration-300 hover:scale-105 hover:shadow-xl"
                 />
-              </div>
+              </motion.div>
             </div>
-          </section>
+          </motion.section>
         </main>
 
         {/* Footer com Blur Interativo */}
-        <footer
+        <motion.footer
           className="py-6 bg-white/10 dark:bg-gray-800/10 backdrop-blur-md border-t border-gray-200/10 dark:border-gray-700/10"
           style={{
             background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(59, 130, 246, 0.1) 0%, rgba(0, 0, 0, 0) 50%)`,
           }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.2, duration: 1 }}
         >
           <div className="container mx-auto px-4 text-center">
             <p className="text-gray-600 dark:text-gray-300 text-sm">
               © 2025 Felipe Alves. Todos os direitos reservados.
             </p>
           </div>
-        </footer>
+        </motion.footer>
       </div>
     </DefaultLayout>
   );

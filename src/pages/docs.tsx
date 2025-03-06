@@ -1,7 +1,7 @@
 import DefaultLayout from "@/layouts/default";
 import { useState } from "react";
 import { FaReact } from "react-icons/fa"; // Ícone do React
-import { SiJavascript, SiTypescript, SiMysql, SiNodedotjs, SiTailwindcss } from "react-icons/si"; // Ícones de JavaScript, TypeScript, MySQL, Node.js e Tailwind CSS
+import { SiJavascript, SiTypescript, SiMysql, SiNodedotjs, SiTailwindcss, SiBootstrap} from "react-icons/si"; // Ícones de JavaScript, TypeScript, MySQL, Node.js e Tailwind CSS
 import { motion } from "framer-motion"; // Importe o Framer Motion
 
 const IndexPage = () => {
@@ -61,11 +61,11 @@ const IndexPage = () => {
                 </header>
                 <div className="text-gray-600 dark:text-gray-300 leading-relaxed space-y-4 text-sm md:text-base">
                   <p>
-                    Sou Felipe Alves, estudante de Análise e Desenvolvimento de Sistemas na UCB e
+                    Me chamo Felipe Alves, tenho 19 anos e sou estudante de Análise e Desenvolvimento de Sistemas na UCB - Universidade Católica de Brasília e
                     desenvolvedor web Front-end com experiência em suporte técnico e manutenção de computadores.
                   </p>
                   <p>
-                    Atualmente, foco em tecnologias como JavaScript, React, TypeScript e MySQL, buscando oportunidades
+                    Atualmente, foco em tecnologias como JavaScript, React, TypeScript, Node.js e MySQL, buscando oportunidades
                     como desenvolvedor e com o objetivo de me tornar Full Stack.
                   </p>
                 </div>
@@ -90,18 +90,6 @@ const IndexPage = () => {
                     Skills
                   </h3>
                   <div className="flex flex-wrap gap-4 md:gap-6 justify-center md:justify-start">
-                    {/* Ícone React */}
-                    <motion.div
-                      className="flex flex-col items-center"
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.2, duration: 0.5 }}
-                    >
-                      <FaReact className="w-8 h-8 md:w-10 md:h-10 text-blue-500 hover:text-blue-600 transition-colors duration-300" />
-                      <span className="text-xs md:text-sm text-gray-600 dark:text-gray-300 mt-2">
-                        React
-                      </span>
-                    </motion.div>
 
                     {/* Ícone JavaScript */}
                     <motion.div
@@ -116,6 +104,18 @@ const IndexPage = () => {
                       </span>
                     </motion.div>
 
+                    {/* Ícone React */}
+                    <motion.div
+                      className="flex flex-col items-center"
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.2, duration: 0.5 }}
+                    >
+                      <FaReact className="w-8 h-8 md:w-10 md:h-10 text-blue-500 hover:text-blue-600 transition-colors duration-300" />
+                      <span className="text-xs md:text-sm text-gray-600 dark:text-gray-300 mt-2">
+                        React
+                      </span>
+                    </motion.div>
                     {/* Ícone TypeScript */}
                     <motion.div
                       className="flex flex-col items-center"
@@ -128,20 +128,6 @@ const IndexPage = () => {
                         TypeScript
                       </span>
                     </motion.div>
-
-                    {/* Ícone MySQL */}
-                    <motion.div
-                      className="flex flex-col items-center"
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.8, duration: 0.5 }}
-                    >
-                      <SiMysql className="w-8 h-8 md:w-10 md:h-10 text-orange-500 hover:text-orange-600 transition-colors duration-300" />
-                      <span className="text-xs md:text-sm text-gray-600 dark:text-gray-300 mt-2">
-                        MySQL
-                      </span>
-                    </motion.div>
-
                     {/* Ícone Node.js */}
                     <motion.div
                       className="flex flex-col items-center"
@@ -154,17 +140,41 @@ const IndexPage = () => {
                         Node.js
                       </span>
                     </motion.div>
-
+                    {/* Ícone MySQL */}
+                    <motion.div
+                      className="flex flex-col items-center"
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.8, duration: 0.5 }}
+                    >
+                      <SiMysql className="w-8 h-8 md:w-10 md:h-10 text-orange-500 hover:text-orange-600 transition-colors duration-300" />
+                      <span className="text-xs md:text-sm text-gray-600 dark:text-gray-300 mt-2">
+                        MySQL
+                      </span>
+                    </motion.div>
                     {/* Ícone Tailwind CSS */}
                     <motion.div
                       className="flex flex-col items-center"
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 1.2, duration: 0.5 }}
+                      
                     >
                       <SiTailwindcss className="w-8 h-8 md:w-10 md:h-10 text-cyan-500 hover:text-cyan-600 transition-colors duration-300" />
                       <span className="text-xs md:text-sm text-gray-600 dark:text-gray-300 mt-2">
                         Tailwind CSS
+                      </span>
+                    </motion.div>
+                      {/* Ícone Bootstrap */}
+                    <motion.div
+                      className="flex flex-col items-center"
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 1.2, duration: 0.5 }}
+                    >
+                      <SiBootstrap className="w-8 h-8 md:w-10 md:h-10 text-purple-500 hover:text-purple-600 transition-colors duration-300" />
+                      <span className="text-xs md:text-sm text-gray-600 dark:text-gray-300 mt-2">
+                        Bootstrap
                       </span>
                     </motion.div>
                   </div>

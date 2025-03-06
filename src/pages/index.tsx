@@ -26,7 +26,7 @@ const IndexPage = () => {
     <DefaultLayout>
       {/* Container principal */}
       <div
-        className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900 overflow-hidden"
+        className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900 overflow-hidden relative"
         onMouseMove={handleMouseMove}
       >
         {/* Fundo animado */}
@@ -39,7 +39,7 @@ const IndexPage = () => {
         />
 
         {/* Conteúdo Principal */}
-        <main className="flex-grow flex items-center justify-center p-4 pt-2"> {/* Ajuste aqui: pt-16 para subir o conteúdo */}
+        <main className="flex-grow flex items-center justify-center p-4 pt-2 relative z-10">
           {/* Seção centralizada */}
           <motion.section
             className="flex flex-col items-center justify-center gap-6 w-full max-w-2xl px-4"
@@ -73,7 +73,7 @@ const IndexPage = () => {
 
             {/* Botões */}
             <motion.div
-              className="flex gap-6 mt-8"
+              className="flex gap-6 mt-6"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.8, ease: "easeOut" }}
@@ -81,10 +81,9 @@ const IndexPage = () => {
               <a
                 href="/about"
                 aria-label="Fale comigo"
-                className="w-full block" // Faz o link ocupar toda a largura
+                className="w-full block"
               >
                 <button
-                  
                   className="mt-6 px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
                 >
                   Fale comigo!
@@ -92,12 +91,12 @@ const IndexPage = () => {
               </a>
             </motion.div>
           </motion.section>
-        {/* Modelo 3D do Notebook ao lado */}
+
         </main>
 
         {/* Footer com Blur Interativo */}
         <footer
-          className="py-6 bg-white/10 dark:bg-gray-800/10 backdrop-blur-md border-t border-gray-200/10 dark:border-gray-700/10 mt-auto"
+          className="py-6 bg-white/10 dark:bg-gray-800/10 backdrop-blur-md border-t border-gray-200/10 dark:border-gray-700/10 mt-auto relative z-10"
           style={{
             background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(59, 130, 246, 0.1) 0%, rgba(0, 0, 0, 0) 50%)`,
           }}

@@ -46,8 +46,6 @@ const pool = mysql.createPool({
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0,
-    connectTimeout: 30000,  // Aumenta para 30 segundos
-    acquireTimeout: 30000,  // Aumenta para 30 segundos
 });
 
 // Teste de conexão com o banco de dados

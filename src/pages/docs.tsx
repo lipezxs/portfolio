@@ -1,7 +1,7 @@
 import DefaultLayout from "@/layouts/default";
 import { useState } from "react";
 import { FaReact } from "react-icons/fa"; // Ícone do React
-import { SiJavascript, SiTypescript, SiMysql, SiNodedotjs, SiTailwindcss, SiBootstrap} from "react-icons/si"; // Ícones de JavaScript, TypeScript, MySQL, Node.js e Tailwind CSS
+import { SiJavascript, SiTypescript, SiMysql, SiNodedotjs, SiTailwindcss, SiBootstrap, SiGit, SiGithub} from "react-icons/si"; // Ícones de JavaScript, TypeScript, MySQL, Node.js e Tailwind CSS
 import { motion } from "framer-motion"; // Importe o Framer Motion
 
 const IndexPage = () => {
@@ -116,6 +116,7 @@ const IndexPage = () => {
                         React
                       </span>
                     </motion.div>
+
                     {/* Ícone TypeScript */}
                     <motion.div
                       className="flex flex-col items-center"
@@ -128,6 +129,7 @@ const IndexPage = () => {
                         TypeScript
                       </span>
                     </motion.div>
+
                     {/* Ícone Node.js */}
                     <motion.div
                       className="flex flex-col items-center"
@@ -140,6 +142,33 @@ const IndexPage = () => {
                         Node.js
                       </span>
                     </motion.div>
+
+                    {/* Ícone Git */}
+                    <motion.div
+                      className="flex flex-col items-center"
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 1.6, duration: 0.5 }}
+                    >
+                      <SiGit className="w-8 h-8 md:w-10 md:h-10 text-orange-500 hover:text-orange-600 transition-colors duration-300" />
+                      <span className="text-xs md:text-sm text-gray-600 dark:text-gray-300 mt-2">
+                        Git
+                      </span>
+                    </motion.div>
+
+                    {/* Ícone GitHub */}
+                    <motion.div
+                      className="flex flex-col items-center"
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 1.8, duration: 0.5 }}
+                    >
+                      <SiGithub className="w-8 h-8 md:w-10 md:h-10 text-gray-800 dark:text-gray-200 hover:text-gray-900 dark:hover:text-gray-100 transition-colors duration-300" />
+                      <span className="text-xs md:text-sm text-gray-600 dark:text-gray-300 mt-2">
+                        GitHub
+                      </span>
+                    </motion.div>
+
                     {/* Ícone MySQL */}
                     <motion.div
                       className="flex flex-col items-center"
@@ -152,20 +181,21 @@ const IndexPage = () => {
                         MySQL
                       </span>
                     </motion.div>
+
                     {/* Ícone Tailwind CSS */}
                     <motion.div
                       className="flex flex-col items-center"
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 1.2, duration: 0.5 }}
-                      
                     >
                       <SiTailwindcss className="w-8 h-8 md:w-10 md:h-10 text-cyan-500 hover:text-cyan-600 transition-colors duration-300" />
                       <span className="text-xs md:text-sm text-gray-600 dark:text-gray-300 mt-2">
                         Tailwind CSS
                       </span>
                     </motion.div>
-                      {/* Ícone Bootstrap */}
+
+                    {/* Ícone Bootstrap */}
                     <motion.div
                       className="flex flex-col items-center"
                       initial={{ opacity: 0, y: -10 }}

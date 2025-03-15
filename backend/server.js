@@ -25,7 +25,7 @@ app.use(cors({
 
 app.use(express.json());
 
-// Middleware de log adicional
+// Middleware de log adicional (opcional, pode ser removido para testes de desempenho)
 app.use((req, res, next) => {
     console.log('Requisição recebida:', {
         method: req.method,
@@ -35,6 +35,7 @@ app.use((req, res, next) => {
     });
     next();
 });
+
 
 // Configuração da pool de conexões do MySQL
 const pool = mysql.createPool({
@@ -66,6 +67,8 @@ pool.getConnection((err, connection) => {
 
 // Rota POST com tratamento de erro detalhado
 app.post('/contact', (req, res) => {
+    const startTime = Date.now(); // Inicia o timer
+
     const { name, email, subject, message } = req.body;
 
     console.log('Dados de contato recebidos:', { name, email, subject, message });
@@ -87,6 +90,9 @@ app.post('/contact', (req, res) => {
     const query = 'INSERT INTO contact_messages (name, email, subject, message) VALUES (?, ?, ?, ?)';
     
     pool.query(query, [name, email, subject, message], (err, result) => {
+        const endTime = Date.now(); // Finaliza o timer
+        console.log(`Tempo de execução da query: ${endTime - startTime}ms`);
+
         if (err) {
             console.error('Erro DETALHADO ao salvar no banco:', {
                 message: err.message,
@@ -107,7 +113,6 @@ app.post('/contact', (req, res) => {
         res.status(200).json({ message: 'Mensagem enviada com sucesso!' });
     });
 });
-
 // Rota de health check
 app.get('/health', (req, res) => {
     res.status(200).json({ 

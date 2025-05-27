@@ -85,7 +85,7 @@ const ContactSection = () => {
 
     setLoading(true);
     try {
-      const response = await fetch("https://portfolio-k0tt.onrender.com/contact", {
+      const response = await fetch("https://portfolio-nrym.onrender.com/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

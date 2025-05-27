@@ -1,7 +1,7 @@
 import DefaultLayout from "@/layouts/default";
 import { useState } from "react";
 import { FaReact } from "react-icons/fa"; // Ícone do React
-import { SiJavascript, SiTypescript, SiMysql, SiNodedotjs, SiTailwindcss, SiBootstrap, SiGit, SiGithub} from "react-icons/si"; // Ícones de JavaScript, TypeScript, MySQL, Node.js e Tailwind CSS
+import { SiJavascript, SiTypescript, SiMysql, SiNodedotjs, SiTailwindcss, SiBootstrap, SiGit, SiGithub,  SiDocker} from "react-icons/si"; // Ícones de JavaScript, TypeScript, MySQL, Node.js e Tailwind CSS
 import { motion } from "framer-motion"; // Importe o Framer Motion
 
 const IndexPage = () => {
@@ -65,7 +65,7 @@ const IndexPage = () => {
                     desenvolvedor web Front-end com experiência em suporte técnico e manutenção de computadores.
                   </p>
                   <p>
-                    Atualmente, foco em tecnologias como JavaScript, React, TypeScript, Node.js e MySQL, buscando oportunidades
+                    Atualmente, foco em tecnologias como JavaScript, React, TypeScript, Node.js e SQL, buscando oportunidades
                     como desenvolvedor e com o objetivo de me tornar Full Stack.
                   </p>
                 </div>
@@ -181,19 +181,30 @@ const IndexPage = () => {
                         MySQL
                       </span>
                     </motion.div>
-
+                     
+                     <motion.div
+                      className="flex flex-col items-center"
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 1.4, duration: 0.5 }}
+                    >
+                      <SiDocker className="w-8 h-8 md:w-10 md:h-10 text-blue-500 hover:text-blue-600 transition-colors duration-300" />
+                      <span className="text-xs md:text-sm text-gray-600 dark:text-gray-300 mt-2">
+                        Docker
+                      </span>
+                      </motion.div>
                     {/* Ícone Tailwind CSS */}
-                    <motion.div
+                    {/* <motion.div
                       className="flex flex-col items-center"
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 1.2, duration: 0.5 }}
                     >
                       <SiTailwindcss className="w-8 h-8 md:w-10 md:h-10 text-cyan-500 hover:text-cyan-600 transition-colors duration-300" />
-                      <span className="text-xs md:text-sm text-gray-600 dark:text-gray-300 mt-2">
-                        Tailwind CSS
+                      <span Tailwind CSSan className="text-xs md:text-sm text-gray-600 dark:text-gray-300 mt-2">
+                       
                       </span>
-                    </motion.div>
+                    </motion.div> */}
 
                     {/* Ícone Bootstrap */}
                     <motion.div

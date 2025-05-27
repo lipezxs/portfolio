@@ -1,140 +1,158 @@
-const mysql = require('mysql2');
-const cors = require("cors");
+// 1. Imports essenciais
+const mysql = require('mysql2/promise');
+const cors = require('cors');
 const express = require('express');
 require('dotenv').config();
 
-
-console.log('Servidor iniciado...');
-app.listen(port, () => {
-    console.log(`Servidor rodando na porta ${port}`);
-});
-
+// 2. Inicialização do app com variáveis no topo
 const app = express();
-const port = process.env.PORT || 51895;
-app.listen(port, () => {
-    console.log(`Servidor rodando na porta ${port}`);
-});
+const port = process.env.PORT || 3000;
 
-// CORS mais permissivo para debug
-app.use(cors({
-    origin: '*',  // Permite todas as origens, útil para debug
-    methods: ["POST", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"]
-}));
-
-
-app.use(express.json());
-
-// Middleware de log adicional (opcional, pode ser removido para testes de desempenho)
-app.use((req, res, next) => {
-    console.log('Requisição recebida:', {
-        method: req.method,
-        path: req.path,
-        body: req.body,
-        headers: req.headers
-    });
-    next();
-});
-
-
-// Configuração da pool de conexões do MySQL
-const pool = mysql.createPool({
+// 3. Configuração do pool MySQL com tratamento de SSL para Railway
+const poolConfig = {
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,
-    port: process.env.DB_PORT,
+    port: process.env.DB_PORT || 3306,
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0,
-});
-
-// Teste de conexão com o banco de dados
-pool.getConnection((err, connection) => {
-    if (err) {
-        console.error('Erro CRÍTICO de conexão:', {
-            message: err.message,
-            code: err.code,
-            errno: err.errno,
-            sqlState: err.sqlState,
-            fatal: err.fatal
-        });
-        return;
+    ssl: {
+        rejectUnauthorized: false // Importante para Railway
     }
-    console.log('Conexão com banco de dados estabelecida com sucesso!');
-    connection.release();
+};
+
+const pool = mysql.createPool(poolConfig);
+
+// 4. Middlewares
+app.use(cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+app.use(express.json({ limit: '10kb' }));
+
+// 5. Verificação de conexão com tratamento de reconexão
+async function checkDatabaseConnection() {
+    let connection;
+    try {
+        connection = await pool.getConnection();
+        await connection.ping();
+        console.log('✅ Conexão com o banco de dados estabelecida');
+        return true;
+    } catch (err) {
+        console.error('❌ Erro na conexão com o banco:', {
+            code: err.code,
+            message: err.message
+        });
+        return false;
+    } finally {
+        if (connection) connection.release();
+    }
+}
+
+// 6. Rotas com tratamento de erro melhorado
+
+// Health Check
+app.get('/health', async (req, res) => {
+    const dbHealthy = await checkDatabaseConnection();
+    res.status(dbHealthy ? 200 : 503).json({
+        status: dbHealthy ? 'healthy' : 'unhealthy',
+        database: dbHealthy ? 'connected' : 'disconnected',
+        timestamp: new Date().toISOString()
+    });
 });
 
-// Rota POST com tratamento de erro detalhado
-app.post('/contact', (req, res) => {
-    const startTime = Date.now(); // Inicia o timer
-
+// Rota de contato com retentativa de conexão
+app.post('/contact', async (req, res) => {
     const { name, email, subject, message } = req.body;
 
-    console.log('Dados de contato recebidos:', { name, email, subject, message });
+    // Validações
+    if (!name?.trim()) return res.status(400).json({ error: 'Nome é obrigatório' });
+    if (!email?.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) return res.status(400).json({ error: 'E-mail inválido' });
+    if (!subject?.trim()) return res.status(400).json({ error: 'Assunto é obrigatório' });
+    if (!message?.trim()) return res.status(400).json({ error: 'Mensagem é obrigatória' });
 
-    // Validações mais rigorosas
-    if (!name || name.trim() === '') {
-        return res.status(400).json({ error: 'Nome é obrigatório.' });
-    }
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        return res.status(400).json({ error: 'E-mail inválido.' });
-    }
-    if (!subject || subject.trim() === '') {
-        return res.status(400).json({ error: 'Assunto é obrigatório.' });
-    }
-    if (!message || message.trim() === '') {
-        return res.status(400).json({ error: 'Mensagem é obrigatória.' });
-    }
-
-    const query = 'INSERT INTO contact_messages (name, email, subject, message) VALUES (?, ?, ?, ?)';
-    
-    pool.query(query, [name, email, subject, message], (err, result) => {
-        const endTime = Date.now(); // Finaliza o timer
-        console.log(`Tempo de execução da query: ${endTime - startTime}ms`);
-
-        if (err) {
-            console.error('Erro DETALHADO ao salvar no banco:', {
-                message: err.message,
-                code: err.code,
-                errno: err.errno,
-                sqlState: err.sqlState,
-                fatal: err.fatal,
-                stack: err.stack
-            });
-            
-            return res.status(500).json({ 
-                error: 'Erro interno ao salvar mensagem', 
-                details: err.message 
-            });
+    try {
+        const [result] = await pool.execute(
+            'INSERT INTO contact_messages (name, email, subject, message) VALUES (?, ?, ?, ?)',
+            [name, email, subject, message]
+        );
+        
+        res.status(201).json({
+            success: true,
+            message: 'Mensagem enviada com sucesso!',
+            messageId: result.insertId
+        });
+    } catch (err) {
+        console.error('Erro no banco de dados:', err);
+        
+        // Tentar reconectar uma vez
+        if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+            console.log('Tentando reconectar ao banco...');
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            try {
+                const [retryResult] = await pool.execute(
+                    'INSERT INTO contact_messages (name, email, subject, message) VALUES (?, ?, ?, ?)',
+                    [name, email, subject, message]
+                );
+                return res.status(201).json({
+                    success: true,
+                    message: 'Mensagem enviada após reconexão!',
+                    messageId: retryResult.insertId
+                });
+            } catch (retryErr) {
+                console.error('Falha na reconexão:', retryErr);
+            }
         }
         
-        console.log('Mensagem salva com sucesso:', result);
-        res.status(200).json({ message: 'Mensagem enviada com sucesso!' });
-    });
-});
-// Rota de health check
-app.get('/health', (req, res) => {
-    res.status(200).json({ 
-        status: 'Servidor online', 
-        timestamp: new Date().toISOString() 
-    });
-});
-// Middleware para tratamento de erros 404
-app.use((req, res, next) => {
-    res.status(404).json({ error: 'Rota não encontrada' });
+        res.status(500).json({
+            success: false,
+            error: 'Erro ao processar sua mensagem',
+            details: process.env.NODE_ENV === 'development' ? err.message : undefined
+        });
+    }
 });
 
-// Middleware de tratamento de erros global
+// 7. Tratamento de erros
+app.use((req, res) => {
+    res.status(404).json({ error: 'Endpoint não encontrado' });
+});
+
 app.use((err, req, res, next) => {
-    console.error('Erro não tratado:', err);
+    console.error('Erro interno:', err);
     res.status(500).json({ 
-        error: 'Erro interno do servidor', 
-        message: err.message 
+        error: 'Erro interno do servidor',
+        details: process.env.NODE_ENV === 'development' ? err.message : undefined
     });
 });
 
-// Inicia o servidor
-app.listen(port, () => {
-    console.log(`Servidor rodando na porta ${port}`);
+// 8. Inicialização do servidor com verificação de conexão
+async function startServer() {
+    // Verifica a conexão com o banco mas não bloqueia a inicialização
+    await checkDatabaseConnection();
+    
+    app.listen(port, () => {
+        console.log(`🚀 Servidor rodando na porta ${port}`);
+        console.log('🔗 URLs importantes:');
+        console.log(`   Local: http://localhost:${port}`);
+        console.log(`   Health Check: http://localhost:${port}/health`);
+    });
+}
+
+startServer();
+
+// 9. Gerenciamento de shutdown
+process.on('SIGINT', async () => {
+    console.log('\n🛑 Encerrando servidor...');
+    try {
+        await pool.end();
+        console.log('✅ Conexões do MySQL encerradas');
+        process.exit(0);
+    } catch (err) {
+        console.error('❌ Erro ao encerrar conexões:', err);
+        process.exit(1);
+    }
 });

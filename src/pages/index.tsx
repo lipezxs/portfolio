@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 const IndexPage = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [typedText, setTypedText] = useState("");
-  const fullText = "Desenvolvedor Web front-end.";
+  const fullText = "Analista/Desenvolvedor de Software.";
 
   // Efeito para animação de digitação
   useEffect(() => {

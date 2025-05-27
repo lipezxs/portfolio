@@ -1,7 +1,7 @@
 import DefaultLayout from "@/layouts/default";
 import { useState } from "react";
 import { FaReact } from "react-icons/fa"; // Ícone do React
-import { SiJavascript, SiTypescript, SiMysql, SiNodedotjs, SiTailwindcss, SiBootstrap, SiGit, SiGithub,  SiDocker} from "react-icons/si"; // Ícones de JavaScript, TypeScript, MySQL, Node.js e Tailwind CSS
+import { SiJavascript, SiTypescript, SiMysql, SiNodedotjs, SiBootstrap, SiGit, SiGithub,  SiDocker} from "react-icons/si"; // Ícones de JavaScript, TypeScript, MySQL, Node.js e Tailwind CSS
 import { motion } from "framer-motion"; // Importe o Framer Motion
 
 const IndexPage = () => {

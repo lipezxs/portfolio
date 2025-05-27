@@ -1,7 +1,7 @@
 import DefaultLayout from "@/layouts/default";
 import { useState } from "react";
 import { FaReact } from "react-icons/fa"; // Ícone do React
-import { SiJavascript, SiTypescript, SiMysql, SiNodedotjs, SiBootstrap, SiGit, SiGithub,  SiDocker} from "react-icons/si"; // Ícones de JavaScript, TypeScript, MySQL, Node.js e Tailwind CSS
+import { SiJavascript, SiTypescript, SiMysql, SiNodedotjs, SiGit, SiGithub,  SiDocker} from "react-icons/si"; // Ícones de JavaScript, TypeScript, MySQL, Node.js e Tailwind CSS
 import { motion } from "framer-motion"; // Importe o Framer Motion
 
 const IndexPage = () => {
@@ -193,31 +193,6 @@ const IndexPage = () => {
                         Docker
                       </span>
                       </motion.div>
-                    {/* Ícone Tailwind CSS */}
-                    {/* <motion.div
-                      className="flex flex-col items-center"
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 1.2, duration: 0.5 }}
-                    >
-                      <SiTailwindcss className="w-8 h-8 md:w-10 md:h-10 text-cyan-500 hover:text-cyan-600 transition-colors duration-300" />
-                      <span Tailwind CSSan className="text-xs md:text-sm text-gray-600 dark:text-gray-300 mt-2">
-                       
-                      </span>
-                    </motion.div> */}
-
-                    {/* Ícone Bootstrap */}
-                    <motion.div
-                      className="flex flex-col items-center"
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 1.2, duration: 0.5 }}
-                    >
-                      <SiBootstrap className="w-8 h-8 md:w-10 md:h-10 text-purple-500 hover:text-purple-600 transition-colors duration-300" />
-                      <span className="text-xs md:text-sm text-gray-600 dark:text-gray-300 mt-2">
-                        Bootstrap
-                      </span>
-                    </motion.div>
                   </div>
                 </motion.div>
               </div>
@@ -230,7 +205,7 @@ const IndexPage = () => {
                 transition={{ delay: 1, duration: 0.8 }}
               >
                 <img
-                  src="/felipe.jpg" // Certifique-se de que o caminho da imagem está correto
+                  src="/felipe.jpg" 
                   alt="Imagem de Felipe Alves principal"
                   className="rounded-lg shadow-2xl w-full max-w-xs md:max-w-sm transform transition-all duration-300 hover:scale-105 hover:shadow-xl"
                 />

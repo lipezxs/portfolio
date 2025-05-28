@@ -1,18 +1,16 @@
 import DefaultLayout from "@/layouts/default";
 import { useState } from "react";
-import { FaReact } from "react-icons/fa"; // Ícone do React
-import { SiJavascript, SiTypescript, SiMysql, SiNodedotjs, SiGit, SiGithub,  SiDocker} from "react-icons/si"; // Ícones de JavaScript, TypeScript, MySQL, Node.js e Tailwind CSS
-import { motion } from "framer-motion"; // Importe o Framer Motion
+import { FaReact } from "react-icons/fa";
+import { SiJavascript, SiTypescript, SiMysql, SiNodedotjs, SiGit, SiGithub,  SiDocker} from "react-icons/si"; 
+import { motion } from "framer-motion"; 
 
 const IndexPage = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
-  // Atualiza a posição do mouse
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     setMousePosition({ x: e.clientX, y: e.clientY });
   };
 
-  // Função para abrir o currículo no Google Drive
   const handleDownloadCV = () => {
     window.open("https://drive.google.com/file/d/1UMCBmWoRNgN_TLYlA149aVRAGey9QKiT/view?usp=drive_link", "_blank");
   };
@@ -61,12 +59,10 @@ const IndexPage = () => {
                 </header>
                 <div className="text-gray-600 dark:text-gray-300 leading-relaxed space-y-4 text-sm md:text-base">
                   <p>
-                    Me chamo Felipe Alves, tenho 19 anos e sou estudante de Análise e Desenvolvimento de Sistemas na UCB - Universidade Católica de Brasília e
-                    desenvolvedor web Front-end com experiência em suporte técnico e manutenção de computadores.
+                    Me chamo Felipe Alves, tenho 19 anos e sou estudante de Análise e Desenvolvimento de Sistemas na UCB <span className="text-blue-500">Universidade Católica de Brasília</span>. Atuo como desenvolvedor web Front-end, com experiência em suporte técnico e manutenção de computadores.
                   </p>
                   <p>
-                    Atualmente, foco em tecnologias como JavaScript, React, TypeScript, Node.js e SQL, buscando oportunidades
-                    como desenvolvedor e com o objetivo de me tornar Full Stack.
+                    Atualmente, meu foco está em tecnologias como <span className="text-blue-500">JavaScript</span>, <span className="text-blue-500">React</span>, <span className="text-blue-500">TypeScript</span>, <span className="text-blue-500">Node.js</span> e <span className="text-blue-500">SQL</span>. Busco oportunidades como desenvolvedor e tenho como objetivo me tornar um profissional <span className="text-blue-500">Full Stack</span>.
                   </p>
                 </div>
                 <motion.button

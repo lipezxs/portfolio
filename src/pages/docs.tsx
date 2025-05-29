@@ -83,7 +83,7 @@ const IndexPage = () => {
                   transition={{ delay: 0.7, duration: 1 }}
                 >
                   <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-4 md:mb-6">
-                    Skills
+                    Conhecimentos
                   </h3>
                   <div className="flex flex-wrap gap-4 md:gap-6 justify-center md:justify-start">
 

@@ -59,8 +59,7 @@ const IndexPage = () => {
               </span>
               <motion.span
                 className="text-3xl md:text-4xl font-bold text-blue-500"
-                animate={{ opacity: [1, 0.5, 1] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
+                transition={{ duration: 1.9, repeat: Infinity }}
               >
                 Alves,&nbsp;
               </motion.span>

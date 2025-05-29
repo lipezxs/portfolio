@@ -85,12 +85,12 @@ const ContactSection = () => {
 
     setLoading(true);
     try {
-      const response = await fetch("https://portfolio-nrym.onrender.com/contact", {
+      const response = await fetch("#", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData), // Enviar os dados reais do formulário
+        body: JSON.stringify(formData), 
       });
 
       const result: ApiResponse = await response.json();

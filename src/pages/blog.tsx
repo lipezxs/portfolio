@@ -121,7 +121,7 @@ const IndexPage = () => {
                   Sistema de Contato
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300 mt-2">
-                  Um sistema full-stack de envio de mensagens para empresas.
+                  Ainda em desenvolvimento...
                 </p>
                 <div className="mt-4">
                   <img

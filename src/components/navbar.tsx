@@ -25,13 +25,12 @@ export const Navbar = () => {
             color="foreground"
             href="/"
           >
-            {/* <Logo /> */}
             <p className="font-bold text-xl text-foreground">Felipe Alves</p>
           </Link>
         </NavbarBrand>
       </NavbarContent>
 
-      <NavbarContent className="hidden lg:flex gap-8 justify-center items-center flex-grow">
+      <NavbarContent className="hidden md:flex gap-4 lg:gap-8 justify-center items-center flex-grow">
         {siteConfig.navItems.map((item) => (
           <NavbarItem key={item.href}>
             <Link
@@ -48,8 +47,8 @@ export const Navbar = () => {
         ))}
       </NavbarContent>
 
-      <NavbarContent className="basis-1/5 sm:basis-full" justify="end">
-        <NavbarItem className="hidden sm:flex gap-6 items-center">
+      <NavbarContent className="hidden md:flex basis-1/5 sm:basis-full" justify="end">
+        <NavbarItem className="flex gap-6 items-center">
           <Link isExternal href={siteConfig.links.InstagramIcon} title="Instagram">
             <InstagramIcon
               className="text-default-500 hover:text-[#E1306C] transition-colors"
@@ -72,18 +71,10 @@ export const Navbar = () => {
         </NavbarItem>
       </NavbarContent>
 
-      <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
+      <NavbarContent className="md:hidden basis-1 pl-4" justify="end">
         <NavbarItem className="flex gap-4 items-center">
-          <Link isExternal href={siteConfig.links.GithubIcon} title="GitHub">
-            <GithubIcon
-              className="text-default-500 hover:text-black dark:hover:text-white transition-colors"
-              size={24}
-            />
-          </Link>
           <ThemeSwitch />
-          <div className="">
-            <NavbarMenuToggle className="text-default-500 hover:text-primary transition-colors text-2xl p-3 rounded-lg" />
-          </div>
+          <NavbarMenuToggle className="text-default-500 hover:text-primary transition-colors text-2xl p-3 rounded-lg" />
         </NavbarItem>
       </NavbarContent>
 
